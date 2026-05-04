@@ -1,123 +1,73 @@
-# Sistema de Análise de Satisfação do Cliente - Projeto 3 SEBRAE
+# React + TypeScript + Vite
 
-## Descrição do Projeto
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Este projeto tem como objetivo medir a satisfação do cliente **sem a necessidade de perguntas diretas**, utilizando análise de comportamento dentro de uma plataforma digital.
+Currently, two official plugins are available:
 
-A ideia central é interpretar ações do usuário como cliques, tempo de permanência, abandono de fluxos e frequência de uso para gerar **insights inteligentes sobre engajamento, satisfação e possíveis problemas na experiência**.
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
----
+## React Compiler
 
-## Objetivo
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-Criar um sistema que permita:
+## Expanding the ESLint configuration
 
-* Identificar problemas na experiência do usuário
-* Detectar sinais de insatisfação de forma indireta
-* Ajudar na tomada de decisão baseada em dados reais de uso
-* Reduzir dependência de pesquisas tradicionais (ex: NPS, formulários)
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
----
+```js
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
 
-## Principais Funcionalidades
+      // Remove tseslint.configs.recommended and replace with this
+      tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      tseslint.configs.stylisticTypeChecked,
 
-### Mapa de Calor de Interações
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
 
-* Rastreia cliques, rolagens e áreas ignoradas
-* Visualização com cores:
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-  * 🔴 Alta interação
-  * 🟡 Média
-  * 🟢 Baixa
-* Permite identificar pontos de interesse e desinteresse
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
 
----
-
-### Detector de Abandono Inteligente
-
-* Identifica onde os usuários estão saindo da plataforma
-* Dashboard com ranking de páginas mais críticas
-* Visualização em funil (entrada → saída)
-* Alertas para quedas abruptas de retenção
-
----
-
-### Score de Engajamento por Cliente
-
-* Gera um índice baseado em:
-
-  * Frequência de uso
-  * Profundidade de navegação
-  * Reuso de funcionalidades
-* Classificação:
-
-  * Baixo
-  * Médio
-  * Alto engajamento
-* Ranking de usuários
-
----
-
-### Alertas de Comportamento Atípico
-
-* Detecta quedas ou mudanças incomuns no uso
-* Gera notificações automáticas
-* Histórico de alertas para análise futura
-* Baseado em análise estatística (ex: desvio padrão)
-
----
-
-### Análise de Conclusão de Serviços
-
-* Acompanha jornadas (ex: inscrição, solicitação)
-* Mostra:
-
-  * Taxa de conclusão
-  * Etapas com maior abandono
-* Visualização em formato de funil
-
----
-
-### Sinais Implícitos de Insatisfação
-
-* Detecta comportamentos como:
-
-  * Longos períodos sem acesso
-  * Demora excessiva em tarefas
-* Classifica risco de churn:
-
-  * Baixo
-  * Médio
-  * Alto
-* Exibe timeline do usuário
-
----
-
-### Taxa de Retorno do Usuário
-
-* Analisa frequência de uso ao longo do tempo
-* Identifica padrões de retenção
-* Comparações entre períodos
-* Sistema de “streak” para engajamento
-
----
-
-## Tecnologias Utilizadas
-
-* **Java** → processamento e lógica de negócio
-* **PostgreSQL** → armazenamento de dados
-* **APIs externas** → coleta de comportamento
-
----
-
-## Diferencial do Projeto
-
-Ao invés de perguntar ao usuário “Você está satisfeito?”, o sistema **observa o comportamento real** e transforma isso em métricas confiáveis.
-
-Isso reduz:
-
-* Viés de resposta
-* Baixa taxa de participação em pesquisas
-* Dados inconsistentes
-
-
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
