@@ -1,35 +1,98 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useMemo, useState } from 'react';
+import { Header } from './components/Header';
+import { Filters } from './components/Filters';
+import { OverviewCards } from './components/OverviewCards';
+import { ClientsTable } from './components/ClientsTable';
+import { Drawer } from './components/Drawer';
+import { useClients } from './hooks/useClients';
+import { useDebouncedValue } from './hooks/useDebouncedValue';
+import {
+  activeAlertsCount,
+  aggregateRiskCounts,
+  averageHealthScore,
+  filterClients,
+  findClientById,
+  sortByRiskAndScore,
+} from './lib/data';
+
+const DEFAULT_PERIOD = 30;
+const SEARCH_DEBOUNCE_MS = 200;
 
 function App() {
-  const [count, setCount] = useState(0)
+  const { ctx, clients, previousPeriodActiveAlerts } = useClients();
+
+  const [periodDays, setPeriodDays] = useState<number>(DEFAULT_PERIOD);
+  const [searchInput, setSearchInput] = useState<string>('');
+  const debouncedSearch = useDebouncedValue(searchInput, SEARCH_DEBOUNCE_MS);
+
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [triggerEl, setTriggerEl] = useState<HTMLElement | null>(null);
+
+  const filteredSorted = useMemo(() => {
+    const sorted = sortByRiskAndScore(clients);
+    return filterClients(sorted, {
+      searchText: debouncedSearch,
+      periodDays,
+      today: ctx.today,
+    });
+  }, [clients, debouncedSearch, periodDays, ctx.today]);
+
+  const counts = useMemo(() => aggregateRiskCounts(filteredSorted), [filteredSorted]);
+  const avgScore = useMemo(() => averageHealthScore(filteredSorted), [filteredSorted]);
+  const currentAlerts = useMemo(() => activeAlertsCount(filteredSorted), [filteredSorted]);
+
+  const selectedClient = useMemo(
+    () => findClientById(clients, selectedId),
+    [clients, selectedId],
+  );
+
+  const handleSelect = (id: string, trigger: HTMLElement) => {
+    setSelectedId(id);
+    setTriggerEl(trigger);
+  };
+
+  const handleClose = () => {
+    setSelectedId(null);
+  };
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Header />
+      <main className="page">
+        <div className="page-title">
+          <h1>Sinais Implícitos de Valor Percebido</h1>
+          <p>
+            Comportamento dos clientes — sinalizações automáticas de risco a partir de
+            inatividade, eficiência e engajamento.
+          </p>
+        </div>
+
+        <Filters
+          periodDays={periodDays}
+          searchInput={searchInput}
+          onPeriodChange={setPeriodDays}
+          onSearchInputChange={setSearchInput}
+        />
+
+        <OverviewCards
+          avgScore={avgScore}
+          counts={counts}
+          total={filteredSorted.length}
+          currentAlerts={currentAlerts}
+          previousAlerts={previousPeriodActiveAlerts}
+        />
+
+        <ClientsTable clients={filteredSorted} onSelect={handleSelect} />
+      </main>
+
+      <Drawer
+        client={selectedClient}
+        today={ctx.today}
+        triggerEl={triggerEl}
+        onClose={handleClose}
+      />
     </>
-  )
+  );
 }
 
-export default App
+export default App;

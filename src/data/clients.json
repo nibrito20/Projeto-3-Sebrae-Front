@@ -1,0 +1,244 @@
+{
+  "meta": {
+    "today": "2026-05-04",
+    "previousPeriodActiveAlerts": 5
+  },
+  "platformAverages": {
+    "taskDurationsMinutes": {
+      "plano-de-negocios": 20,
+      "cadastro-cnpj": 8,
+      "solicitacao-credito": 15,
+      "matricula-curso": 5
+    }
+  },
+  "clients": [
+    {
+      "id": "c-001",
+      "nome": "Padaria São João LTDA",
+      "cnpj": "12.345.678/0001-90",
+      "lastAccessDate": "2026-04-08",
+      "loginCountLast30d": 0,
+      "worstTask": {
+        "id": "plano-de-negocios",
+        "label": "Plano de Negócios",
+        "userMinutes": 50
+      },
+      "timeline": [
+        { "type": "alert",   "date": "2026-05-04", "title": "Alerta de inatividade", "description": "26 dias sem acesso à plataforma." },
+        { "type": "alert",   "date": "2026-04-08", "title": "Tentativa frustrada em Plano de Negócios", "description": "Abandonou após 50min (média da plataforma: 20min)." },
+        { "type": "neutral", "date": "2026-04-08", "title": "Último login", "description": "Acessou dashboard, abriu Plano de Negócios e saiu." },
+        { "type": "warning", "date": "2026-03-25", "title": "Sessão curta", "description": "Acessou por menos de 2min, sem ações relevantes." },
+        { "type": "positive","date": "2026-03-12", "title": "Concluiu curso", "description": "Fluxo de Caixa para Pequenos Negócios." },
+        { "type": "neutral", "date": "2026-02-28", "title": "Cadastro de CNPJ atualizado", "description": "Atualização cadastral concluída em 8min." }
+      ]
+    },
+    {
+      "id": "c-002",
+      "nome": "Mercearia Vista Verde ME",
+      "cnpj": "23.456.789/0001-01",
+      "lastAccessDate": "2026-04-12",
+      "loginCountLast30d": 1,
+      "worstTask": {
+        "id": "solicitacao-credito",
+        "label": "Solicitação de Crédito",
+        "userMinutes": 38
+      },
+      "timeline": [
+        { "type": "alert",   "date": "2026-05-04", "title": "Alerta de inatividade", "description": "22 dias sem acesso à plataforma." },
+        { "type": "alert",   "date": "2026-04-12", "title": "Tentativa frustrada em Solicitação de Crédito", "description": "Abandonou após 38min (média da plataforma: 15min)." },
+        { "type": "neutral", "date": "2026-04-12", "title": "Último login", "description": "Apenas o módulo de crédito foi acessado." },
+        { "type": "warning", "date": "2026-03-30", "title": "Tentativa de cadastro com falha", "description": "Erro ao enviar documentação anexa, sessão encerrada." },
+        { "type": "positive","date": "2026-03-04", "title": "Concluiu serviço", "description": "Cadastro CNPJ finalizado dentro da média." }
+      ]
+    },
+    {
+      "id": "c-003",
+      "nome": "Salão Bela Forma ME",
+      "cnpj": "34.567.890/0001-12",
+      "lastAccessDate": "2026-04-15",
+      "loginCountLast30d": 2,
+      "worstTask": {
+        "id": "plano-de-negocios",
+        "label": "Plano de Negócios",
+        "userMinutes": 65
+      },
+      "timeline": [
+        { "type": "alert",   "date": "2026-05-04", "title": "Alerta de inatividade", "description": "19 dias sem acesso à plataforma." },
+        { "type": "alert",   "date": "2026-04-15", "title": "Tentativa frustrada em Plano de Negócios", "description": "Abandonou após 65min (média da plataforma: 20min)." },
+        { "type": "neutral", "date": "2026-04-15", "title": "Último login", "description": "Tentou completar plano de negócios e desistiu." },
+        { "type": "warning", "date": "2026-04-09", "title": "Sessão lenta", "description": "Levou 18min para preencher dados básicos do plano." },
+        { "type": "neutral", "date": "2026-03-28", "title": "Login curto", "description": "Acessou apenas dashboard, sem outras ações." },
+        { "type": "positive","date": "2026-02-15", "title": "Concluiu curso", "description": "Atendimento ao Cliente — nível básico." }
+      ]
+    },
+    {
+      "id": "c-004",
+      "nome": "Tech Solutions Júnior",
+      "cnpj": "45.678.901/0001-23",
+      "lastAccessDate": "2026-04-25",
+      "loginCountLast30d": 4,
+      "worstTask": {
+        "id": "solicitacao-credito",
+        "label": "Solicitação de Crédito",
+        "userMinutes": 28
+      },
+      "timeline": [
+        { "type": "warning", "date": "2026-04-25", "title": "Demora em Solicitação de Crédito", "description": "Levou 28min (média da plataforma: 15min)." },
+        { "type": "neutral", "date": "2026-04-25", "title": "Último login", "description": "Sessão de 35min navegando entre módulos." },
+        { "type": "neutral", "date": "2026-04-19", "title": "Login regular", "description": "Acessou módulo de simulação de crédito." },
+        { "type": "positive","date": "2026-04-10", "title": "Concluiu curso", "description": "Marketing Digital para Pequenos Negócios." },
+        { "type": "neutral", "date": "2026-03-30", "title": "Sessão de pesquisa", "description": "Consultou conteúdo da biblioteca por 22min." }
+      ]
+    },
+    {
+      "id": "c-005",
+      "nome": "Açougue Boi Bom LTDA",
+      "cnpj": "56.789.012/0001-34",
+      "lastAccessDate": "2026-04-22",
+      "loginCountLast30d": 5,
+      "worstTask": {
+        "id": "plano-de-negocios",
+        "label": "Plano de Negócios",
+        "userMinutes": 32
+      },
+      "timeline": [
+        { "type": "warning", "date": "2026-04-22", "title": "Demora em Plano de Negócios", "description": "Levou 32min (média da plataforma: 20min)." },
+        { "type": "neutral", "date": "2026-04-22", "title": "Último login", "description": "Trabalhou no plano de negócios e salvou rascunho." },
+        { "type": "neutral", "date": "2026-04-14", "title": "Login regular", "description": "Acessou painel financeiro e relatórios." },
+        { "type": "positive","date": "2026-04-05", "title": "Concluiu serviço", "description": "Solicitação de crédito aprovada." },
+        { "type": "neutral", "date": "2026-03-25", "title": "Login regular", "description": "Sessão de 18min, revisão de relatórios." }
+      ]
+    },
+    {
+      "id": "c-006",
+      "nome": "Floricultura Primavera Encantada",
+      "cnpj": "67.890.123/0001-45",
+      "lastAccessDate": "2026-04-20",
+      "loginCountLast30d": 3,
+      "worstTask": {
+        "id": "matricula-curso",
+        "label": "Matrícula em Curso",
+        "userMinutes": 11
+      },
+      "timeline": [
+        { "type": "warning", "date": "2026-05-04", "title": "Aviso de inatividade", "description": "14 dias sem acesso — fora do padrão da cliente." },
+        { "type": "warning", "date": "2026-04-20", "title": "Demora em Matrícula em Curso", "description": "Levou 11min (média da plataforma: 5min)." },
+        { "type": "neutral", "date": "2026-04-20", "title": "Último login", "description": "Matriculou-se em curso e saiu." },
+        { "type": "neutral", "date": "2026-04-12", "title": "Login regular", "description": "Acessou catálogo de cursos." },
+        { "type": "positive","date": "2026-03-22", "title": "Concluiu curso", "description": "Empreendedorismo Feminino — módulo introdutório." }
+      ]
+    },
+    {
+      "id": "c-007",
+      "nome": "Restaurante Sabor Caseiro EIRELI",
+      "cnpj": "78.901.234/0001-56",
+      "lastAccessDate": "2026-04-26",
+      "loginCountLast30d": 6,
+      "worstTask": {
+        "id": "cadastro-cnpj",
+        "label": "Cadastro de CNPJ",
+        "userMinutes": 15
+      },
+      "timeline": [
+        { "type": "warning", "date": "2026-04-26", "title": "Demora em Cadastro de CNPJ", "description": "Levou 15min (média da plataforma: 8min)." },
+        { "type": "neutral", "date": "2026-04-26", "title": "Último login", "description": "Atualizou cadastro do CNPJ e saiu." },
+        { "type": "positive","date": "2026-04-18", "title": "Concluiu curso", "description": "Gestão de Custos em Restaurantes." },
+        { "type": "neutral", "date": "2026-04-10", "title": "Login regular", "description": "Sessão produtiva de 28min." },
+        { "type": "positive","date": "2026-03-28", "title": "Concluiu serviço", "description": "Plano de negócios revisado e validado." }
+      ]
+    },
+    {
+      "id": "c-008",
+      "nome": "Confecções Jardim Modas",
+      "cnpj": "89.012.345/0001-67",
+      "lastAccessDate": "2026-04-18",
+      "loginCountLast30d": 4,
+      "worstTask": {
+        "id": "plano-de-negocios",
+        "label": "Plano de Negócios",
+        "userMinutes": 27
+      },
+      "timeline": [
+        { "type": "alert",   "date": "2026-05-04", "title": "Alerta de inatividade", "description": "16 dias sem acesso à plataforma." },
+        { "type": "warning", "date": "2026-04-18", "title": "Demora em Plano de Negócios", "description": "Levou 27min (média da plataforma: 20min)." },
+        { "type": "neutral", "date": "2026-04-18", "title": "Último login", "description": "Salvou rascunho do plano de negócios." },
+        { "type": "positive","date": "2026-04-02", "title": "Concluiu curso", "description": "Vendas Online — fundamentos." },
+        { "type": "neutral", "date": "2026-03-26", "title": "Login regular", "description": "Acessou catálogo de cursos por 12min." }
+      ]
+    },
+    {
+      "id": "c-009",
+      "nome": "Auto Posto Esquina Forte",
+      "cnpj": "90.123.456/0001-78",
+      "lastAccessDate": "2026-05-02",
+      "loginCountLast30d": 8,
+      "worstTask": {
+        "id": "cadastro-cnpj",
+        "label": "Cadastro de CNPJ",
+        "userMinutes": 9
+      },
+      "timeline": [
+        { "type": "neutral", "date": "2026-05-02", "title": "Último login", "description": "Sessão de 25min, revisão de painel." },
+        { "type": "positive","date": "2026-04-29", "title": "Concluiu serviço", "description": "Cadastro de CNPJ atualizado dentro da média." },
+        { "type": "positive","date": "2026-04-22", "title": "Concluiu curso", "description": "Gestão Financeira — nível intermediário." },
+        { "type": "neutral", "date": "2026-04-15", "title": "Login regular", "description": "Acessou relatórios mensais." },
+        { "type": "positive","date": "2026-04-08", "title": "Concluiu serviço", "description": "Solicitação de crédito aprovada." }
+      ]
+    },
+    {
+      "id": "c-010",
+      "nome": "Cafeteria Grão Dourado",
+      "cnpj": "01.234.567/0001-89",
+      "lastAccessDate": "2026-05-01",
+      "loginCountLast30d": 7,
+      "worstTask": {
+        "id": "solicitacao-credito",
+        "label": "Solicitação de Crédito",
+        "userMinutes": 18
+      },
+      "timeline": [
+        { "type": "neutral", "date": "2026-05-01", "title": "Último login", "description": "Sessão produtiva de 32min." },
+        { "type": "positive","date": "2026-04-26", "title": "Concluiu curso", "description": "Atendimento ao Cliente — nível avançado." },
+        { "type": "neutral", "date": "2026-04-20", "title": "Login regular", "description": "Acessou módulo de simulação de crédito." },
+        { "type": "positive","date": "2026-04-10", "title": "Concluiu serviço", "description": "Plano de negócios revisado e exportado." }
+      ]
+    },
+    {
+      "id": "c-011",
+      "nome": "Pet Shop AmiCão",
+      "cnpj": "11.222.333/0001-44",
+      "lastAccessDate": "2026-05-03",
+      "loginCountLast30d": 9,
+      "worstTask": {
+        "id": "matricula-curso",
+        "label": "Matrícula em Curso",
+        "userMinutes": 6
+      },
+      "timeline": [
+        { "type": "neutral", "date": "2026-05-03", "title": "Último login", "description": "Sessão de 18min, navegação no catálogo." },
+        { "type": "positive","date": "2026-04-30", "title": "Concluiu curso", "description": "Marketing para Pequenos Negócios — completo." },
+        { "type": "positive","date": "2026-04-22", "title": "Matriculou-se em curso", "description": "Iniciou módulo de Vendas Consultivas." },
+        { "type": "neutral", "date": "2026-04-15", "title": "Login regular", "description": "Sessão produtiva de 40min." },
+        { "type": "positive","date": "2026-04-08", "title": "Concluiu serviço", "description": "Cadastro de CNPJ atualizado em 7min." }
+      ]
+    },
+    {
+      "id": "c-012",
+      "nome": "Marcenaria Lúcio & Filhos",
+      "cnpj": "22.333.444/0001-55",
+      "lastAccessDate": "2026-04-29",
+      "loginCountLast30d": 6,
+      "worstTask": {
+        "id": "plano-de-negocios",
+        "label": "Plano de Negócios",
+        "userMinutes": 24
+      },
+      "timeline": [
+        { "type": "neutral", "date": "2026-04-29", "title": "Último login", "description": "Trabalhou no plano de negócios por 24min." },
+        { "type": "neutral", "date": "2026-04-22", "title": "Login regular", "description": "Sessão de 15min, revisão de cadastros." },
+        { "type": "positive","date": "2026-04-12", "title": "Concluiu serviço", "description": "Solicitação de crédito enviada e aprovada." },
+        { "type": "positive","date": "2026-04-02", "title": "Concluiu curso", "description": "Custos e Precificação para Indústria." }
+      ]
+    }
+  ]
+}
