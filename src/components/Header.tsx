@@ -1,12 +1,24 @@
 import { SearchIcon } from './icons/SearchIcon';
 import { UserIcon } from './icons/UserIcon';
 import { MenuIcon } from './icons/MenuIcon';
+import type { Pagina } from '../types';
 
 interface HeaderProps {
   onMenuAbrir?: () => void;
+  onNavegar: (pagina: Pagina) => void;
+  nomeUsuario: string;
 }
 
-export function Header({onMenuAbrir }: HeaderProps) {
+export function Header({onMenuAbrir, onNavegar, nomeUsuario}: HeaderProps) {
+
+  const handleProfileClick = () => {
+    if (nomeUsuario) {
+      onNavegar('perfil');
+    } else {
+      onNavegar('login');
+    }
+  };
+
   return (
     <header className="app-header" role="banner">
       <div className="app-header__inner">
@@ -28,7 +40,7 @@ export function Header({onMenuAbrir }: HeaderProps) {
           <button type="button" className="app-header__icon-btn" aria-label="Buscar">
             <SearchIcon />
           </button>
-          <button type="button" className="app-header__icon-btn" aria-label="Perfil">
+          <button type="button" className="app-header__icon-btn" aria-label="Perfil" onClick={handleProfileClick}>
             <UserIcon />
           </button>
           <button type="button" className="app-header__icon-btn" aria-label="Menu" onClick={onMenuAbrir}>

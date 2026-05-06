@@ -62,4 +62,4 @@ export interface ClientsPayload {
 
 export type InactivityLevel = 'high' | 'med' | 'low';
 export type EfficiencyLevel = 'alert' | 'warn' | 'ok';
-export type Pagina = 'login' | 'cadastro' | 'dashboard' | 'home';
+export type Pagina = 'login' | 'cadastro' | 'dashboard' | 'home' | 'perfil';

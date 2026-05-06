@@ -1,10 +1,12 @@
 import { useState } from 'react';
+import type { Pagina } from '../types';
 
 interface Props {
   onIrLogin: () => void;
+  onNavegar: (pagina: Pagina) => void;
 }
 
-export function CadastroPage({ onIrLogin }: Props) {
+export function CadastroPage({ onIrLogin, onNavegar}: Props) {
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
@@ -42,6 +44,16 @@ export function CadastroPage({ onIrLogin }: Props) {
   return (
     <div className="auth-wrapper">
       <div className="auth-card">
+
+        <button 
+          type="button" 
+          className="back-button-login" 
+          onClick={() => onNavegar('home')}
+          title="Voltar para Home"
+        >
+          ←
+        </button>
+
         <div className="auth-header">
           <div className="auth-logo">Sebrae</div>
           <h1>Criar conta</h1>

@@ -10,6 +10,7 @@ import { useDebouncedValue } from './hooks/useDebouncedValue';
 import { LoginPage } from './components/LoginPage';
 import { CadastroPage } from './components/CadastroPage';
 import { HomePage } from "./components/HomePage";
+import { UserProfile } from './components/UserProfile';
 import {
   activeAlertsCount,
   aggregateRiskCounts,
@@ -27,7 +28,7 @@ function App() {
 
   const { ctx, clients, previousPeriodActiveAlerts, loading } = useClients();
 
-  const [pagina, setPagina] = useState<Pagina>('login');
+  const [pagina, setPagina] = useState<Pagina>('home');
   const [nomeUsuario, setNomeUsuario] = useState('');
   const [menuAberto, setMenuAberto] = useState(false);
   const [periodDays, setPeriodDays] = useState<number>(DEFAULT_PERIOD);
@@ -64,6 +65,11 @@ function App() {
     setSelectedId(null);
   };
 
+  const handleLogout = () => {
+    setNomeUsuario('');
+    setPagina('home');
+  };
+
   if (loading || !ctx) return <div>Carregando...</div>;
 
   return (
@@ -81,11 +87,15 @@ function App() {
         <LoginPage
           onLogin={(nome) => { setNomeUsuario(nome); setPagina('home'); }}
           onIrCadastro={() => setPagina('cadastro')}
+          onNavegar={setPagina}
         />
       )}
 
       {pagina === 'cadastro' && (
-        <CadastroPage onIrLogin={() => setPagina('login')} />
+        <CadastroPage 
+          onIrLogin={() => setPagina('login')} 
+          onNavegar={setPagina}
+        />
       )}
 
       {pagina === 'home' && (
@@ -96,10 +106,20 @@ function App() {
         />
       )}
 
+      {pagina === 'perfil' && (
+        <UserProfile 
+          nomeUsuario={nomeUsuario} 
+          onNavegar={setPagina} 
+          onLogout={handleLogout}
+        />
+      )}
+
       {pagina === 'dashboard' && (
         <>
           <Header
             onMenuAbrir={() => setMenuAberto(true)}
+            onNavegar={setPagina}
+            nomeUsuario={nomeUsuario}
           />
           <main className="page">
             <div className="page-title">

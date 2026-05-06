@@ -17,6 +17,8 @@ export function HomePage({ nomeUsuario, onNavegar }: HomePageProps) {
     <div className="home-page">
       <Header 
         onMenuAbrir={() => setMenuAberto(true)}
+        onNavegar={onNavegar}
+        nomeUsuario={nomeUsuario}
       />
       <NavDrawer
         isOpen={menuAberto}
