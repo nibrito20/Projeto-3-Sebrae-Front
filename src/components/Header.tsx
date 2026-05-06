@@ -1,9 +1,12 @@
 import { SearchIcon } from './icons/SearchIcon';
 import { UserIcon } from './icons/UserIcon';
 import { MenuIcon } from './icons/MenuIcon';
-import type { Pagina } from '../types';
 
-export function Header({ onNavegar }: { onNavegar?: (pagina: Pagina) => void }) {
+interface HeaderProps {
+  onMenuAbrir?: () => void;
+}
+
+export function Header({onMenuAbrir }: HeaderProps) {
   return (
     <header className="app-header" role="banner">
       <div className="app-header__inner">
@@ -28,11 +31,8 @@ export function Header({ onNavegar }: { onNavegar?: (pagina: Pagina) => void }) 
           <button type="button" className="app-header__icon-btn" aria-label="Perfil">
             <UserIcon />
           </button>
-          <button type="button" className="app-header__icon-btn" aria-label="Menu">
+          <button type="button" className="app-header__icon-btn" aria-label="Menu" onClick={onMenuAbrir}>
             <MenuIcon />
-          </button>
-          <button type="button" className="app-header__nav-btn" onClick={() => onNavegar?.('dashboard')}>
-              Sinais Implícitos
           </button>
         </nav>
       </div>

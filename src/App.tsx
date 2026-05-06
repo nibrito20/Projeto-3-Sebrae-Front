@@ -4,6 +4,7 @@ import { Filters } from './components/Filters';
 import { OverviewCards } from './components/OverviewCards';
 import { ClientsTable } from './components/ClientsTable';
 import { Drawer } from './components/Drawer';
+import { NavDrawer } from './components/NavDrawer';
 import { useClients } from './hooks/useClients';
 import { useDebouncedValue } from './hooks/useDebouncedValue';
 import { LoginPage } from './components/LoginPage';
@@ -17,6 +18,7 @@ import {
   findClientById,
   sortByRiskAndScore,
 } from './lib/data';
+import type { Pagina } from './types';
 
 const DEFAULT_PERIOD = 30;
 const SEARCH_DEBOUNCE_MS = 200;
@@ -25,13 +27,12 @@ function App() {
 
   const { ctx, clients, previousPeriodActiveAlerts, loading } = useClients();
 
-  const [pagina, setPagina] = useState<'login' | 'cadastro' | 'dashboard' | 'home'>('login');
+  const [pagina, setPagina] = useState<Pagina>('login');
   const [nomeUsuario, setNomeUsuario] = useState('');
-
+  const [menuAberto, setMenuAberto] = useState(false);
   const [periodDays, setPeriodDays] = useState<number>(DEFAULT_PERIOD);
   const [searchInput, setSearchInput] = useState<string>('');
   const debouncedSearch = useDebouncedValue(searchInput, SEARCH_DEBOUNCE_MS);
-
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [triggerEl, setTriggerEl] = useState<HTMLElement | null>(null);
 
@@ -63,62 +64,71 @@ function App() {
     setSelectedId(null);
   };
 
-  if (pagina === 'login') return (
-    <LoginPage
-      onLogin={(nome) => { setNomeUsuario(nome); setPagina('home'); }}
-      onIrCadastro={() => setPagina('cadastro')}
-    />
-  );
-
-  if (pagina === 'cadastro') return (
-    <CadastroPage onIrLogin={() => setPagina('login')} />
-  );
-
-  if (pagina === 'home') return (
-     <HomePage 
-     nomeUsuario={nomeUsuario} 
-     onNavegar={setPagina} 
-     />
-  );
-
   if (loading || !ctx) return <div>Carregando...</div>;
 
   return (
     <>
-      <Header />
-      <main className="page">
-        <div className="page-title">
-          <h1>Sinais Implícitos de Valor Percebido</h1>
-          <p>
-            Comportamento dos clientes — sinalizações automáticas de risco a partir de
-            inatividade, eficiência e engajamento.
-          </p>
-        </div>
-
-        <Filters
-          periodDays={periodDays}
-          searchInput={searchInput}
-          onPeriodChange={setPeriodDays}
-          onSearchInputChange={setSearchInput}
+      {pagina !== 'login' && pagina !== 'cadastro' && (
+        <NavDrawer
+          isOpen={menuAberto}
+          onClose={() => setMenuAberto(false)}
+          onNavegar={setPagina}
+          paginaAtiva={pagina}
         />
+      )}
 
-        <OverviewCards
-          avgScore={avgScore}
-          counts={counts}
-          total={filteredSorted.length}
-          currentAlerts={currentAlerts}
-          previousAlerts={previousPeriodActiveAlerts}
+      {pagina === 'login' && (
+        <LoginPage
+          onLogin={(nome) => { setNomeUsuario(nome); setPagina('home'); }}
+          onIrCadastro={() => setPagina('cadastro')}
         />
+      )}
 
-        <ClientsTable clients={filteredSorted} onSelect={handleSelect} />
-      </main>
+      {pagina === 'cadastro' && (
+        <CadastroPage onIrLogin={() => setPagina('login')} />
+      )}
 
-      <Drawer
-        client={selectedClient}
-        today={ctx?.today ?? ''}
-        triggerEl={triggerEl}
-        onClose={handleClose}
-      />
+      {pagina === 'home' && (
+        <HomePage
+          nomeUsuario={nomeUsuario}
+          onNavegar={setPagina}
+          onMenuAbrir={() => setMenuAberto(true)}
+        />
+      )}
+
+      {pagina === 'dashboard' && (
+        <>
+          <Header
+            onMenuAbrir={() => setMenuAberto(true)}
+          />
+          <main className="page">
+            <div className="page-title">
+              <h1>Sinais Implícitos de Valor Percebido</h1>
+              <p>Comportamento dos clientes — sinalizações automáticas...</p>
+            </div>
+            <Filters
+              periodDays={periodDays}
+              searchInput={searchInput}
+              onPeriodChange={setPeriodDays}
+              onSearchInputChange={setSearchInput}
+            />
+            <OverviewCards
+              avgScore={avgScore}
+              counts={counts}
+              total={filteredSorted.length}
+              currentAlerts={currentAlerts}
+              previousAlerts={previousPeriodActiveAlerts}
+            />
+            <ClientsTable clients={filteredSorted} onSelect={handleSelect} />
+          </main>
+          <Drawer
+            client={selectedClient}
+            today={ctx?.today ?? ''}
+            triggerEl={triggerEl}
+            onClose={handleClose}
+          />
+        </>
+      )}
     </>
   );
 }
