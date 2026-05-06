@@ -19,7 +19,8 @@ const DEFAULT_PERIOD = 30;
 const SEARCH_DEBOUNCE_MS = 200;
 
 function App() {
-  const { ctx, clients, previousPeriodActiveAlerts } = useClients();
+
+  const { ctx, clients, previousPeriodActiveAlerts, loading } = useClients();
 
   const [periodDays, setPeriodDays] = useState<number>(DEFAULT_PERIOD);
   const [searchInput, setSearchInput] = useState<string>('');
@@ -29,13 +30,14 @@ function App() {
   const [triggerEl, setTriggerEl] = useState<HTMLElement | null>(null);
 
   const filteredSorted = useMemo(() => {
+    if (!ctx) return [];
     const sorted = sortByRiskAndScore(clients);
     return filterClients(sorted, {
       searchText: debouncedSearch,
       periodDays,
       today: ctx.today,
     });
-  }, [clients, debouncedSearch, periodDays, ctx.today]);
+  }, [clients, debouncedSearch, periodDays, ctx]);
 
   const counts = useMemo(() => aggregateRiskCounts(filteredSorted), [filteredSorted]);
   const avgScore = useMemo(() => averageHealthScore(filteredSorted), [filteredSorted]);
@@ -54,6 +56,8 @@ function App() {
   const handleClose = () => {
     setSelectedId(null);
   };
+
+  if (loading || !ctx) return <div>Carregando...</div>;
 
   return (
     <>
@@ -87,7 +91,7 @@ function App() {
 
       <Drawer
         client={selectedClient}
-        today={ctx.today}
+        today={ctx?.today ?? ''}
         triggerEl={triggerEl}
         onClose={handleClose}
       />

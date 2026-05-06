@@ -1,25 +1,36 @@
-import { useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import type { ClientEnriched, Ctx } from '../types';
 import {
   buildContext,
   enrichAllClients,
-  payload,
+  fetchPayload,
 } from '../lib/data';
 
 export interface UseClientsResult {
-  ctx: Ctx;
+  ctx: Ctx | null;
   clients: ClientEnriched[];
   previousPeriodActiveAlerts: number;
+  loading: boolean;
 }
 
 export function useClients(): UseClientsResult {
-  return useMemo(() => {
-    const ctx = buildContext(payload);
-    const clients = enrichAllClients(payload);
-    return {
-      ctx,
-      clients,
-      previousPeriodActiveAlerts: payload.meta.previousPeriodActiveAlerts,
-    };
+  const [ctx, setCtx] = useState<Ctx | null>(null);
+  const [clients, setClients] = useState<ClientEnriched[]>([]);
+  const [previousPeriodActiveAlerts, setPreviousAlerts] = useState(0);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchPayload().then((payload) => {
+      setCtx(buildContext(payload));
+      setClients(enrichAllClients(payload));
+      setPreviousAlerts(payload.meta.previousPeriodActiveAlerts);
+      setLoading(false);
+    })
+    .catch((err) => {
+      console.error('Erro ao buscar dados do servidor:', err);
+      setLoading(false);
+    });
   }, []);
+
+  return { ctx, clients, previousPeriodActiveAlerts, loading };
 }

@@ -6,7 +6,7 @@ import type {
   RiskLabel,
   TimelineEvent,
 } from '../types';
-import rawData from '../data/clients.json';
+
 import { classifyRisk } from './risk';
 import { daysBetween } from './format';
 
@@ -16,7 +16,11 @@ const RISK_ORDER: Record<RiskLabel, number> = {
   baixo: 2,
 };
 
-export const payload = rawData as ClientsPayload;
+export async function fetchPayload(): Promise<ClientsPayload> {
+  const response = await fetch('http://localhost:8080/api/clientes');
+  const data = await response.json();
+  return data as ClientsPayload;
+}
 
 export function buildContext(p: ClientsPayload): Ctx {
   return {
