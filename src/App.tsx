@@ -8,6 +8,7 @@ import { useClients } from './hooks/useClients';
 import { useDebouncedValue } from './hooks/useDebouncedValue';
 import { LoginPage } from './components/LoginPage';
 import { CadastroPage } from './components/CadastroPage';
+import { HomePage } from "./components/HomePage";
 import {
   activeAlertsCount,
   aggregateRiskCounts,
@@ -24,8 +25,8 @@ function App() {
 
   const { ctx, clients, previousPeriodActiveAlerts, loading } = useClients();
 
-  const [pagina, setPagina] = useState<'login' | 'cadastro' | 'dashboard'>('login');
-  const [, setNomeUsuario] = useState('');
+  const [pagina, setPagina] = useState<'login' | 'cadastro' | 'dashboard' | 'home'>('login');
+  const [nomeUsuario, setNomeUsuario] = useState('');
 
   const [periodDays, setPeriodDays] = useState<number>(DEFAULT_PERIOD);
   const [searchInput, setSearchInput] = useState<string>('');
@@ -64,13 +65,20 @@ function App() {
 
   if (pagina === 'login') return (
     <LoginPage
-      onLogin={(nome) => { setNomeUsuario(nome); setPagina('dashboard'); }}
+      onLogin={(nome) => { setNomeUsuario(nome); setPagina('home'); }}
       onIrCadastro={() => setPagina('cadastro')}
     />
   );
 
   if (pagina === 'cadastro') return (
     <CadastroPage onIrLogin={() => setPagina('login')} />
+  );
+
+  if (pagina === 'home') return (
+     <HomePage 
+     nomeUsuario={nomeUsuario} 
+     onNavegar={setPagina} 
+     />
   );
 
   if (loading || !ctx) return <div>Carregando...</div>;
