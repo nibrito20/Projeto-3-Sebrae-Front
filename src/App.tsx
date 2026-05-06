@@ -6,6 +6,8 @@ import { ClientsTable } from './components/ClientsTable';
 import { Drawer } from './components/Drawer';
 import { useClients } from './hooks/useClients';
 import { useDebouncedValue } from './hooks/useDebouncedValue';
+import { LoginPage } from './components/LoginPage';
+import { CadastroPage } from './components/CadastroPage';
 import {
   activeAlertsCount,
   aggregateRiskCounts,
@@ -21,6 +23,9 @@ const SEARCH_DEBOUNCE_MS = 200;
 function App() {
 
   const { ctx, clients, previousPeriodActiveAlerts, loading } = useClients();
+
+  const [pagina, setPagina] = useState<'login' | 'cadastro' | 'dashboard'>('login');
+  const [, setNomeUsuario] = useState('');
 
   const [periodDays, setPeriodDays] = useState<number>(DEFAULT_PERIOD);
   const [searchInput, setSearchInput] = useState<string>('');
@@ -56,6 +61,17 @@ function App() {
   const handleClose = () => {
     setSelectedId(null);
   };
+
+  if (pagina === 'login') return (
+    <LoginPage
+      onLogin={(nome) => { setNomeUsuario(nome); setPagina('dashboard'); }}
+      onIrCadastro={() => setPagina('cadastro')}
+    />
+  );
+
+  if (pagina === 'cadastro') return (
+    <CadastroPage onIrLogin={() => setPagina('login')} />
+  );
 
   if (loading || !ctx) return <div>Carregando...</div>;
 

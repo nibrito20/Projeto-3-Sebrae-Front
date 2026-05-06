@@ -1,0 +1,112 @@
+.auth-wrapper {
+  min-height: 100vh;
+  background: var(--color-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-card {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: var(--sp-7);
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+
+.auth-logo {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-lg);
+  border-radius: var(--radius-md);
+  padding: 10px 20px;
+  display: inline-block;
+  margin-bottom: var(--sp-4);
+}
+
+.auth-header {
+  text-align: center;
+  margin-bottom: var(--sp-2);
+}
+
+.auth-header h1 {
+  font-size: var(--fs-xl);
+  color: var(--color-primary);
+}
+
+.auth-header p {
+  color: var(--color-text-muted);
+  font-size: var(--fs-sm);
+}
+
+.auth-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.auth-field label {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+}
+
+.auth-field input {
+  padding: var(--sp-3) var(--sp-4);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  font-size: var(--fs-base);
+}
+
+.auth-btn {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: var(--sp-3) var(--sp-4);
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-base);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.auth-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.auth-btn:hover:not(:disabled) {
+  background: var(--color-primary-hover);
+}
+
+.auth-erro {
+  color: var(--risk-high-fg);
+  font-size: var(--fs-sm);
+  background: var(--risk-high-bg);
+  padding: var(--sp-3);
+  border-radius: var(--radius-sm);
+}
+
+.auth-sucesso {
+  color: var(--risk-low-fg);
+  font-size: var(--fs-sm);
+  background: var(--risk-low-bg);
+  padding: var(--sp-3);
+  border-radius: var(--radius-sm);
+}
+
+.auth-footer {
+  text-align: center;
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+}
+
+.auth-footer span {
+  color: var(--color-accent);
+  cursor: pointer;
+  font-weight: var(--fw-semibold);
+}
