@@ -17,7 +17,7 @@ const RISK_ORDER: Record<RiskLabel, number> = {
 };
 
 export async function fetchPayload(): Promise<ClientsPayload> {
-  const response = await fetch('http://localhost:8080/api/clientes');
+  const response = await fetch(`${import.meta.env.VITE_API_URL}/api/clientes`);
   const data = await response.json();
   return data as ClientsPayload;
 }
