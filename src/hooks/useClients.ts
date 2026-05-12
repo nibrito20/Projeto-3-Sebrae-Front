@@ -1,36 +1,40 @@
 import { useState, useEffect } from 'react';
-import type { ClientEnriched, Ctx } from '../types';
+import type { ClientEnriched, ClientsPayload} from '../types';
 import {
-  buildContext,
   enrichAllClients,
+  fetchSimulatedServices,
   fetchPayload,
+  type Service
 } from '../lib/data';
 
 export interface UseClientsResult {
-  ctx: Ctx | null;
+  ctx: any; // Use o tipo Ctx se o tiver definido
   clients: ClientEnriched[];
-  previousPeriodActiveAlerts: number;
+  servicos: Service[]; // Esta lista agora terá a 'taxaConclusao' vinda do Java
   loading: boolean;
 }
 
-export function useClients(): UseClientsResult {
-  const [ctx, setCtx] = useState<Ctx | null>(null);
+export function useClients() {
+  const [ctx, setCtx] = useState<ClientsPayload | null>(null);
   const [clients, setClients] = useState<ClientEnriched[]>([]);
-  const [previousPeriodActiveAlerts, setPreviousAlerts] = useState(0);
+  const [servicos, setServicos] = useState<Service[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+
     fetchPayload().then((payload) => {
-      setCtx(buildContext(payload));
+      setCtx(payload);
       setClients(enrichAllClients(payload));
-      setPreviousAlerts(payload.meta.previousPeriodActiveAlerts);
-      setLoading(false);
-    })
-    .catch((err) => {
-      console.error('Erro ao buscar dados do servidor:', err);
+      
+      fetchSimulatedServices()
+      .then((dados: Service[]) => { // Force a tipagem aqui
+        setServicos(dados);
+      })
+      .catch(() => setServicos([]));
+      
       setLoading(false);
     });
   }, []);
 
-  return { ctx, clients, previousPeriodActiveAlerts, loading };
+  return { ctx, clients, servicos, loading, previousPeriodActiveAlerts: ctx?.meta.previousPeriodActiveAlerts ?? 0};
 }

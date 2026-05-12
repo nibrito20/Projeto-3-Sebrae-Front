@@ -16,10 +16,17 @@ const RISK_ORDER: Record<RiskLabel, number> = {
   baixo: 2,
 };
 
+// Mantém esta para a Home
 export async function fetchPayload(): Promise<ClientsPayload> {
   const response = await fetch(`${import.meta.env.VITE_API_URL}/api/clientes`);
+  return await response.json();
+}
+
+// Cria esta nova para a aba de serviços
+export async function fetchSimulatedServices(): Promise<Service[]> {
+  const response = await fetch(`${import.meta.env.VITE_API_URL}/api/dados-completos`);
   const data = await response.json();
-  return data as ClientsPayload;
+  return data.servicos || []; 
 }
 
 export function buildContext(p: ClientsPayload): Ctx {
@@ -30,14 +37,28 @@ export function buildContext(p: ClientsPayload): Ctx {
 }
 
 export function enrichAllClients(p: ClientsPayload): ClientEnriched[] {
-  const ctx = buildContext(p);
-  return p.clients.map((c) => classifyRisk(c, ctx));
+  const ctxForRisk = {
+    today: p.meta.today,
+    platformAverages: p.platformAverages,
+  };
+  return p.clients.map((c) => classifyRisk(c, ctxForRisk));
 }
 
 export interface FilterOptions {
   searchText: string;
   periodDays: number;
   today: string;
+}
+
+export interface Service {
+  id: number;
+  nome: string;
+  totalIniciados: number;
+  totalConcluidos: number;
+  totalAbandonados: number;
+  tempoMedioMinutos: number;
+  taxaConclusao: number;
+  scoreConclusao: number;
 }
 
 export function filterClients(clients: ClientEnriched[], opts: FilterOptions): ClientEnriched[] {
@@ -105,4 +126,12 @@ export function findClientById(
 
 export function rebuildEnriched(rawClients: Client[], ctx: Ctx): ClientEnriched[] {
   return rawClients.map((c) => classifyRisk(c, ctx));
+}
+
+export function getServices(p: ClientsPayload) {
+  return p.servicos || [];
+}
+
+export function findServiceById(p: ClientsPayload, id: number) {
+  return p.servicos.find(s => s.id === id) || null;
 }

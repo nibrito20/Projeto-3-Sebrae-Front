@@ -25,6 +25,17 @@ export interface Client {
   timeline: TimelineEvent[];
 }
 
+export interface Service {
+  id: number;
+  nome: string;
+  totalIniciados: number;
+  totalConcluidos: number;
+  totalAbandonados: number;
+  tempoMedioMinutos: number;
+  taxaConclusao: number;
+  scoreConclusao: number; // Garanta que é 'number' sem o '?' para não dar erro no App.tsx
+}
+
 export interface PlatformAverages {
   taskDurationsMinutes: Record<string, number>;
 }
@@ -58,8 +69,9 @@ export interface ClientsPayload {
   };
   platformAverages: PlatformAverages;
   clients: Client[];
+  servicos: Service[];
 }
 
 export type InactivityLevel = 'high' | 'med' | 'low';
 export type EfficiencyLevel = 'alert' | 'warn' | 'ok';
-export type Pagina = 'login' | 'cadastro' | 'dashboard' | 'home' | 'perfil';
+export type Pagina = 'login' | 'cadastro' | 'dashboard' | 'home' | 'perfil' | 'services';

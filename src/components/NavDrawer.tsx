@@ -4,7 +4,7 @@ import type { Pagina } from '../types';
 
 const navItems = [
   { id: 'home' as Pagina, label: 'Início', icon: '⊙' },
-//   { id: 'home' as Pagina, label: 'Análise de Conclusão de Serviços', icon: '⊙' },
+  { id: 'services' as Pagina, label: 'Análise de Conclusão de Serviços', icon: '⊙' },
   { id: 'dashboard' as Pagina, label: 'Sinais Implícitos de Valor Percebido', icon: '⊙' },
 //   { id: '' as Pagina, label: 'Taxa de Retorno do Usuário', icon: '⊙' },
 //   { id: '' as Pagina, label: 'Alertas de Comportamento Atípico', icon: '⊙' },

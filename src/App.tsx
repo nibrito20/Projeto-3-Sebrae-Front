@@ -11,6 +11,7 @@ import { LoginPage } from './components/LoginPage';
 import { CadastroPage } from './components/CadastroPage';
 import { HomePage } from "./components/HomePage";
 import { UserProfile } from './components/UserProfile';
+import { ServiceFunnel } from './components/ServiceFunnel';
 import {
   activeAlertsCount,
   aggregateRiskCounts,
@@ -26,7 +27,7 @@ const SEARCH_DEBOUNCE_MS = 200;
 
 function App() {
 
-  const { ctx, clients, previousPeriodActiveAlerts, loading } = useClients();
+  const { ctx, clients, servicos, previousPeriodActiveAlerts, loading } = useClients();
 
   const [pagina, setPagina] = useState<Pagina>('home');
   const [nomeUsuario, setNomeUsuario] = useState('');
@@ -43,7 +44,7 @@ function App() {
     return filterClients(sorted, {
       searchText: debouncedSearch,
       periodDays,
-      today: ctx.today,
+      today: ctx.meta.today,
     });
   }, [clients, debouncedSearch, periodDays, ctx]);
 
@@ -143,12 +144,56 @@ function App() {
           </main>
           <Drawer
             client={selectedClient}
-            today={ctx?.today ?? ''}
+            today={ctx.meta.today}
             triggerEl={triggerEl}
             onClose={handleClose}
           />
         </>
       )}
+
+      {pagina === 'services' && (
+        <>
+          <Header
+            onMenuAbrir={() => setMenuAberto(true)}
+            onNavegar={setPagina}
+            nomeUsuario={nomeUsuario}
+          />
+          <main className="page">
+            <div className="page-title">
+              <h1>Análise de Conclusão de Serviços</h1>
+              <p>Acompanhamento de conversão e eficiência dos fluxos digitais.</p>
+            </div>
+            
+            {/* <Filters
+              periodDays={periodDays}
+              searchInput={searchInput}
+              onPeriodChange={setPeriodDays}
+              onSearchInputChange={setSearchInput}
+            /> */}
+
+            <div className="services-container" style={{ 
+              display: 'flex', 
+              flexDirection: 'column', 
+              gap: '40px',
+              marginTop: '20px',
+              maxWidth: '1100px',
+              margin: '0 auto',
+              width: '100%' 
+            }}>
+              {servicos.length > 0 ? (
+                servicos.map((s) => (
+                  <div key={s.id} style={{ width: '100%' }}>
+                    <ServiceFunnel service={s} />
+                  </div>
+                ))
+              ) : (
+                <div className="table-empty">Nenhum serviço disponível para análise.</div>
+              )}
+            </div>
+          </main>
+        </>
+      )}
+
     </>
   );
 }
