@@ -37,6 +37,7 @@ function App() {
   const debouncedSearch = useDebouncedValue(searchInput, SEARCH_DEBOUNCE_MS);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [triggerEl, setTriggerEl] = useState<HTMLElement | null>(null);
+  const [servicoSelecionado, setServicoSelecionado] = useState<number>(0);
 
   const filteredSorted = useMemo(() => {
     if (!ctx) return [];
@@ -163,29 +164,14 @@ function App() {
               <h1>Análise de Conclusão de Serviços</h1>
               <p>Acompanhamento de conversão e eficiência dos fluxos digitais.</p>
             </div>
-            
-            {/* <Filters
-              periodDays={periodDays}
-              searchInput={searchInput}
-              onPeriodChange={setPeriodDays}
-              onSearchInputChange={setSearchInput}
-            /> */}
 
-            <div className="services-container" style={{ 
-              display: 'flex', 
-              flexDirection: 'column', 
-              gap: '40px',
-              marginTop: '20px',
-              maxWidth: '1100px',
-              margin: '0 auto',
-              width: '100%' 
-            }}>
+            <div style={{ marginTop: '20px', maxWidth: '1100px', margin: '0 auto', width: '100%' }}>
               {servicos.length > 0 ? (
-                servicos.map((s) => (
-                  <div key={s.id} style={{ width: '100%' }}>
-                    <ServiceFunnel service={s} />
-                  </div>
-                ))
+                <ServiceFunnel
+                  service={servicos[servicoSelecionado]}
+                  servicos={servicos}
+                  onServiceChange={(s) => setServicoSelecionado(servicos.indexOf(s))}
+                />
               ) : (
                 <div className="table-empty">Nenhum serviço disponível para análise.</div>
               )}

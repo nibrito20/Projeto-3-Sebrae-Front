@@ -1,11 +1,14 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import type { Service } from '../types';
+import html2canvas from 'html2canvas';
 
 interface ServiceFunnelProps {
   service: Service;
+  servicos: Service[];
+  onServiceChange: (service: Service) => void;
 }
 
-export function ServiceFunnel({ service }: ServiceFunnelProps) {
+export function ServiceFunnel({ service, servicos, onServiceChange }: ServiceFunnelProps) {
 
   useEffect(() => {
   document.title = 'SEBRAE - Análise de Conclusão'
@@ -13,6 +16,7 @@ export function ServiceFunnel({ service }: ServiceFunnelProps) {
 
   const taxaFinal = service.taxaConclusao || ((service.totalConcluidos / service.totalIniciados) * 100) || 0;
   const [mostrarDetalhes, setMostrarDetalhes] = useState(false);
+  const [exportando, setExportando] = useState(false);
 
   const steps = [
     { label: 'Início',    pct: 100,       color: '#38761d' },
@@ -21,12 +25,33 @@ export function ServiceFunnel({ service }: ServiceFunnelProps) {
     { label: 'Conclusão', pct: taxaFinal, color: '#cc0000' },
   ];
 
+  const funnelRef = useRef<HTMLDivElement>(null);
+
+  const handleExportar = async () => {
+    if (!funnelRef.current) return;
+    setExportando(true);
+    const canvas = await html2canvas(funnelRef.current);
+    const link = document.createElement('a');
+    link.download = `${service.nome}.png`;
+    link.href = canvas.toDataURL();
+    link.click();
+    setExportando(false);
+  };
+
   return (
-    <div className="funnel-wrapper">
+    <div className="funnel-wrapper" ref={funnelRef}>
       <div className="funnel-main">
         <div className="funnel-controls">
-          <select>
-            <option>{service.nome}</option>
+          <select
+            value={service.id}
+            onChange={(e) => {
+              const selecionado = servicos.find(s => s.id === Number(e.target.value));
+              if (selecionado) onServiceChange(selecionado);
+            }}
+          >
+            {servicos.map(s => (
+              <option key={s.id} value={s.id}>{s.nome}</option>
+            ))}
           </select>
           <select>
             <option>24/08/26</option>
@@ -103,7 +128,9 @@ export function ServiceFunnel({ service }: ServiceFunnelProps) {
         </div>
 
         <div className="funnel-sidebar__actions">
-          <button>Exportar</button>
+          <button onClick={handleExportar} disabled={exportando}>
+            {exportando ? 'Exportando...' : 'Exportar'}
+          </button>
           <button>24/08/26</button>
         </div>
 
