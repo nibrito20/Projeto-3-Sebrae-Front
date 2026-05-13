@@ -39,16 +39,23 @@ export function ServiceFunnel({ service }: ServiceFunnelProps) {
         {mostrarDetalhes && (
           <div className="funnel-detalhes-popover">
             <div className="funnel-detalhes-popover__header">
-              Média de tempo na etapa: 12min
+              Média de tempo na etapa: {service.tempoMedioEtapa}
             </div>
             <div className="funnel-detalhes-popover__body">
-              <p><strong>Principais dispositivos:</strong><br/> Mobile (iPhone) <br/> Desktop (Chrome)</p>
-              <p><strong>Origens de tráfego:</strong><br/> • Busca Orgânica <br/> • Instagram</p>
+              <p>
+                <strong>Principais dispositivos:</strong><br/>
+                {service.dispositivos?.map((d, i) => <span key={i}>{d}<br/></span>)}
+              </p>
+              <p>
+                <strong>Origens de tráfego:</strong><br/>
+                {service.origensTrafego?.map((o, i) => <span key={i}>• {o}<br/></span>)}
+              </p>
               <div className="funnel-detalhes-popover__usuarios">
                 <strong>Últimos usuários:</strong>
                 <div>
-                  <p>👤 ID: 235980 — 24/08/26</p>
-                  <p>👤 ID: 235643 — 19/08/26</p>
+                  {service.ultimosUsuarios?.map(u => (
+                    <p key={u.id}>👤 ID: {u.id} — {u.data}</p>
+                  ))}
                 </div>
               </div>
               <p className="funnel-detalhes-popover__ver-mais">Ver mais detalhes</p>
@@ -102,9 +109,10 @@ export function ServiceFunnel({ service }: ServiceFunnelProps) {
 
         <div className="funnel-sidebar__metrics">
           <div>Taxa de conclusão total: <strong>{taxaFinal.toFixed(1)}%</strong></div>
-          <div>Tempo médio de jornada: <strong>23m</strong></div>
-          <div>Maior gargalo: <strong>Etapa 2</strong></div>
+          <div>Tempo médio de jornada: <strong>{service.tempoMedioMinutos}m</strong></div>
+          <div>Maior gargalo: <strong>{service.gargalo}</strong></div>
         </div>
+        
       </div>
     </div>
   );

@@ -34,6 +34,12 @@ export interface Service {
   tempoMedioMinutos: number;
   taxaConclusao: number;
   scoreConclusao: number;
+
+  tempoMedioEtapa?: string;
+  dispositivos?: string[];
+  origensTrafego?: string[];
+  ultimosUsuarios?: { id: string; data: string }[];
+  gargalo?: string;
 }
 
 export interface PlatformAverages {
