@@ -74,6 +74,13 @@ function App() {
 
   if (loading || !ctx) return <div>Carregando...</div>;
 
+  const paginasProtegidas: Pagina[] = ['dashboard', 'services', 'perfil'];
+
+  if (paginasProtegidas.includes(pagina) && !nomeUsuario) {
+    setPagina('login');
+    return null;
+  }
+
   return (
     <>
       {pagina !== 'login' && pagina !== 'cadastro' && (
