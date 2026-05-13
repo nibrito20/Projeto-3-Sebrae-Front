@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Header } from "./Header";
 import { NavDrawer } from './NavDrawer';
 import type { Pagina } from '../types';
@@ -11,7 +11,11 @@ interface HomePageProps {
 
 export function HomePage({ nomeUsuario, onNavegar }: HomePageProps) {
 
-    const [menuAberto, setMenuAberto] = useState(false);
+  useEffect(() => {
+  document.title = 'SEBRAE - Home'
+}, [])
+
+  const [menuAberto, setMenuAberto] = useState(false);
 
   return (
     <div className="home-page">

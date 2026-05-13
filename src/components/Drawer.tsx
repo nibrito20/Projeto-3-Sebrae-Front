@@ -32,6 +32,10 @@ export function Drawer({ client, today, triggerEl, onClose }: DrawerProps) {
   const isOpen = client !== null;
 
   useEffect(() => {
+    document.title = 'SEBRAE - Sinais Implícitos'
+  }, [])  
+
+  useEffect(() => {
     if (!isOpen) return;
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();

@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import type { Pagina } from '../types';
 
 interface UserProfileProps {
@@ -7,6 +8,11 @@ interface UserProfileProps {
 }
 
 export function UserProfile({ nomeUsuario, onNavegar, onLogout }: UserProfileProps) {
+
+  useEffect(() => {
+  document.title = 'SEBRAE - Perfil'
+}, [])
+
   return (
     <div className="user-profile">
       <header className="page-header">

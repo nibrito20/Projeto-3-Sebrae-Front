@@ -781,3 +781,176 @@
   display: block;
   font-size: var(--fs-base);
 }
+
+/* ============================================
+   ServiceFunnel — Estilos extraídos
+   ============================================ */
+
+/* Container principal */
+.funnel-wrapper {
+  display: flex;
+  gap: 24px;
+  padding: 30px;
+  background-color: #f5f5f5;
+  border-radius: 20px;
+  font-family: sans-serif;
+}
+
+/* ── Área principal do funil ── */
+.funnel-main {
+  flex: 2;
+  background-color: #e0e0e0;
+  padding: 30px;
+  border-radius: 16px;
+  position: relative;
+}
+
+/* Barra de controles (selects + botão) */
+.funnel-controls {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 25px;
+}
+
+.funnel-controls select {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background-color: white;
+}
+
+.funnel-controls .btn-comparar {
+  padding: 8px 24px;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* Popover de detalhes */
+.funnel-detalhes-popover {
+  position: absolute;
+  top: 85px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 320px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.15);
+  padding: 20px;
+  z-index: 100;
+  border: 1px solid #eee;
+  text-align: left;
+}
+
+.funnel-detalhes-popover__header {
+  font-weight: bold;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+}
+
+.funnel-detalhes-popover__body {
+  font-size: 13px;
+  color: #444;
+}
+
+.funnel-detalhes-popover__body p {
+  margin: 0 0 8px 0;
+}
+
+.funnel-detalhes-popover__usuarios {
+  border-top: 1px solid #eee;
+  margin-top: 10px;
+  padding-top: 10px;
+}
+
+.funnel-detalhes-popover__usuarios strong {
+  font-size: 12px;
+  color: #666;
+}
+
+.funnel-detalhes-popover__usuarios p {
+  margin: 2px 0;
+}
+
+.funnel-detalhes-popover__ver-mais {
+  color: #0066cc;
+  margin-top: 10px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* SVG do funil */
+.funnel-svg {
+  width: 100%;
+  height: auto;
+}
+
+.funnel-svg g {
+  cursor: pointer;
+}
+
+/* ── Sidebar de Overview ── */
+.funnel-sidebar {
+  flex: 0.8;
+  background-color: #d1d1d1;
+  padding: 24px;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.funnel-sidebar__title {
+  margin: 0 0 4px 0;
+  font-size: 18px;
+}
+
+.funnel-sidebar__subtitle {
+  margin: 0 0 20px 0;
+  font-size: 14px;
+  color: #444;
+}
+
+/* Mini preview do funil */
+.funnel-sidebar__preview {
+  background-color: white;
+  padding: 15px;
+  border-radius: 12px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.funnel-sidebar__preview svg {
+  width: 80px;
+  height: auto;
+}
+
+/* Botões da sidebar */
+.funnel-sidebar__actions {
+  width: 100%;
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.funnel-sidebar__actions button {
+  flex: 1;
+  padding: 6px;
+  border-radius: 4px;
+  border: none;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+/* Métricas resumo */
+.funnel-sidebar__metrics {
+  width: 100%;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #333;
+}

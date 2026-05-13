@@ -33,7 +33,7 @@ export interface Service {
   totalAbandonados: number;
   tempoMedioMinutos: number;
   taxaConclusao: number;
-  scoreConclusao: number; // Garanta que é 'number' sem o '?' para não dar erro no App.tsx
+  scoreConclusao: number;
 }
 
 export interface PlatformAverages {

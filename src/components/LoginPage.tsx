@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import '../styles/auth.css';
 import type { Pagina } from '../types';
 
@@ -9,6 +9,11 @@ interface Props {
 }
 
 export function LoginPage({ onLogin, onIrCadastro, onNavegar}: Props) {
+
+  useEffect(() => {
+  document.title = 'SEBRAE - Login'
+}, [])
+
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [erro, setErro] = useState('');

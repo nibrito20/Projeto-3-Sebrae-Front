@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import type { Pagina } from '../types';
 
 interface Props {
@@ -7,6 +7,11 @@ interface Props {
 }
 
 export function CadastroPage({ onIrLogin, onNavegar}: Props) {
+
+  useEffect(() => {
+  document.title = 'SEBRAE - Cadastro'
+}, [])
+
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
