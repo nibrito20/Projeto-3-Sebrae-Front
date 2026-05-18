@@ -173,11 +173,16 @@
   background: var(--color-bg);
 }
 
-.home-page__content {
+.home-page__content,
+.service-page__content {
   width: 100%;
   max-width: 1440px;
   margin: 0 auto;
   padding: var(--sp-6) var(--sp-6) var(--sp-8);
+}
+
+.service-page__content {
+  margin-top: var(--sp-3);
 }
 
 .app-header__nav-btn {
