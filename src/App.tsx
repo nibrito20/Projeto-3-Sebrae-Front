@@ -10,7 +10,7 @@ import {
 import { NavDrawer } from './components/NavDrawer';
 import { useClients } from './hooks/useClients';
 import { useDebouncedValue } from './hooks/useDebouncedValue';
-import { HomePage, LoginPage, CadastroPage, DashboardPage, ServicesPage, ProfilePage } from './pages';
+import { HomePage, LoginPage, CadastroPage, DashboardPage, ServicesPage, ProfilePage, HeatmapPage, HeatmapViewPage } from './pages';
 import {
   activeAlertsCount,
   aggregateRiskCounts,
@@ -19,7 +19,7 @@ import {
   findClientById,
   sortByRiskAndScore,
 } from './lib/data';
-import type { Pagina } from './types';
+import type { HeatmapPage as HeatmapPageType, Pagina } from './types';
 
 const DEFAULT_PERIOD = 30;
 const SEARCH_DEBOUNCE_MS = 200;
@@ -31,6 +31,7 @@ const PAGE_ROUTES: Record<Pagina, string> = {
   dashboard: '/dashboard',
   services: '/services',
   perfil: '/perfil',
+  heatmap: '/heatmap',
 };
 
 const PATH_TO_PAGE: Record<string, Pagina> = {
@@ -40,9 +41,11 @@ const PATH_TO_PAGE: Record<string, Pagina> = {
   '/dashboard': 'dashboard',
   '/services': 'services',
   '/perfil': 'perfil',
+  '/heatmap': 'heatmap',
 };
 
 function getPageFromPath(pathname: string): Pagina {
+  if (pathname.startsWith('/heatmap')) return 'heatmap';
   return PATH_TO_PAGE[pathname] ?? 'home';
 }
 
@@ -61,6 +64,7 @@ function AppRouter() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [triggerEl, setTriggerEl] = useState<HTMLElement | null>(null);
   const [servicoSelecionado, setServicoSelecionado] = useState<number>(0);
+  const [selectedHeatmapPage, setSelectedHeatmapPage] = useState<HeatmapPageType | null>(null);
 
   const filteredSorted = useMemo(() => {
     if (!ctx) return [];
@@ -135,7 +139,7 @@ function AppRouter() {
             <LoginPage
               onLogin={(nome) => {
                 setNomeUsuario(nome);
-                navigate('/dashboard');
+                navigate('/');
               }}
               onIrCadastro={() => navigate('/cadastro')}
               onNavegar={handleNavigate}
@@ -202,6 +206,29 @@ function AppRouter() {
                 onLogout={handleLogout}
                 onMenuAbrir={() => setMenuAberto(true)}
               />,
+            )
+          }
+        />
+        <Route
+          path="/heatmap"
+          element={
+            requireAuth(
+              selectedHeatmapPage ? (
+                <HeatmapViewPage
+                  nomeUsuario={nomeUsuario}
+                  onMenuAbrir={() => setMenuAberto(true)}
+                  onNavegar={handleNavigate}
+                  selectedPage={selectedHeatmapPage}
+                  onVoltar={() => setSelectedHeatmapPage(null)}
+                />
+              ) : (
+                <HeatmapPage
+                  nomeUsuario={nomeUsuario}
+                  onMenuAbrir={() => setMenuAberto(true)}
+                  onNavegar={handleNavigate}
+                  onSelectPage={(page) => setSelectedHeatmapPage(page)}
+                />
+              ),
             )
           }
         />

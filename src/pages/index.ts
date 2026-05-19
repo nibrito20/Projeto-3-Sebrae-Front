@@ -4,3 +4,5 @@ export { CadastroPage } from './CadastroPage';
 export { DashboardPage } from './DashboardPage';
 export { ServicesPage } from './ServicesPage';
 export { ProfilePage } from './ProfilePage';
+export { HeatmapPage } from './HeatmapPage';
+export { HeatmapViewPage } from './HeatmapViewPage';
