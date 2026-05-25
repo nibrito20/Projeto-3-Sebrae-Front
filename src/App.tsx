@@ -10,7 +10,7 @@ import {
 import { NavDrawer } from './components/NavDrawer';
 import { useClients } from './hooks/useClients';
 import { useDebouncedValue } from './hooks/useDebouncedValue';
-import { HomePage, LoginPage, CadastroPage, DashboardPage, ServicesPage, ProfilePage } from './pages';
+import { HomePage, LoginPage, CadastroPage, DashboardPage, ServicesPage, ProfilePage, EngajamentoPage } from './pages';
 import {
   activeAlertsCount,
   aggregateRiskCounts,
@@ -24,23 +24,25 @@ import type { Pagina } from './types';
 const DEFAULT_PERIOD = 30;
 const SEARCH_DEBOUNCE_MS = 200;
 
-const PAGE_ROUTES: Record<Pagina, string> = {
+const PAGE_ROUTES = {
   home: '/',
   login: '/login',
   cadastro: '/cadastro',
   dashboard: '/dashboard',
   services: '/services',
   perfil: '/perfil',
-};
+  engajamento: '/engajamento',
+} as Record<Pagina, string>;
 
-const PATH_TO_PAGE: Record<string, Pagina> = {
+const PATH_TO_PAGE = {
   '/': 'home',
   '/login': 'login',
   '/cadastro': 'cadastro',
   '/dashboard': 'dashboard',
   '/services': 'services',
   '/perfil': 'perfil',
-};
+  '/engajamento': 'engajamento',
+} as Record<string, Pagina>;
 
 function getPageFromPath(pathname: string): Pagina {
   return PATH_TO_PAGE[pathname] ?? 'home';
@@ -173,6 +175,19 @@ function AppRouter() {
                 today={ctx.meta.today}
                 triggerEl={triggerEl}
                 onDrawerClose={handleClose}
+              />,
+            )
+          }
+        />
+        <Route
+          path="/engajamento"
+          element={
+            requireAuth(
+              <EngajamentoPage
+                nomeUsuario={nomeUsuario}
+                onMenuAbrir={() => setMenuAberto(true)}
+                onNavegar={handleNavigate}
+                clients={clients}
               />,
             )
           }

@@ -4,3 +4,4 @@ export { CadastroPage } from './CadastroPage';
 export { DashboardPage } from './DashboardPage';
 export { ServicesPage } from './ServicesPage';
 export { ProfilePage } from './ProfilePage';
+export { EngajamentoPage } from './EngajamentoPage';

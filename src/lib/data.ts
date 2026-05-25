@@ -3,6 +3,7 @@ import type {
   ClientEnriched,
   ClientsPayload,
   Ctx,
+  EngagementRankingItem,
   RiskLabel,
   TimelineEvent,
 } from '../types';
@@ -27,6 +28,20 @@ export async function fetchSimulatedServices(): Promise<Service[]> {
   const response = await fetch(`${import.meta.env.VITE_API_URL}/api/dados-completos`);
   const data = await response.json();
   return data.servicos || []; 
+}
+
+export async function fetchEngagementRanking(): Promise<EngagementRankingItem[]> {
+  const response = await fetch(`${import.meta.env.VITE_API_URL}/api/clientes/engajamento`);
+  const data = await response.json();
+
+  return (data ?? []).map((item: any) => ({
+    clienteId: String(item.clienteId ?? item.clienteID ?? item.id ?? ''),
+    scoreFinal: Number(item.scoreFinal ?? 0),
+    nivel: String(item.nivel ?? item.nivelEngajamento ?? 'BAIXO'),
+    frequencia: Number(item.frequencia ?? 0),
+    profundidade: Number(item.profundidade ?? 0),
+    reuso: Number(item.reuso ?? 0),
+  }));
 }
 
 export function buildContext(p: ClientsPayload): Ctx {

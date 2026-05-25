@@ -42,6 +42,16 @@ export interface Service {
   gargalo?: string;
 }
 
+export interface EngagementRankingItem {
+  clienteId: string;
+  scoreFinal: number;
+  nivel: string;
+  frequencia: number;
+  profundidade: number;
+  reuso: number;
+  nome?: string;
+}
+
 export interface PlatformAverages {
   taskDurationsMinutes: Record<string, number>;
 }
@@ -80,4 +90,4 @@ export interface ClientsPayload {
 
 export type InactivityLevel = 'high' | 'med' | 'low';
 export type EfficiencyLevel = 'alert' | 'warn' | 'ok';
-export type Pagina = 'login' | 'cadastro' | 'dashboard' | 'home' | 'perfil' | 'services';
+export type Pagina = 'login' | 'cadastro' | 'dashboard' | 'home' | 'perfil' | 'services' | 'engajamento';
