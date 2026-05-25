@@ -88,6 +88,22 @@ export interface ClientsPayload {
   servicos: Service[];
 }
 
+export interface HeatmapGrid {
+  id: number;
+  page: string;
+  gridX: number;
+  gridY: number;
+  totalClicks: number;
+  totalMoves: number;
+}
+
+export interface HeatmapPage {
+  id: string;
+  label: string;
+  thumbnail: string;
+  screenshot: string;
+}
+
 export type InactivityLevel = 'high' | 'med' | 'low';
 export type EfficiencyLevel = 'alert' | 'warn' | 'ok';
-export type Pagina = 'login' | 'cadastro' | 'dashboard' | 'home' | 'perfil' | 'services' | 'engajamento';
+export type Pagina = 'login' | 'cadastro' | 'dashboard' | 'home' | 'perfil' | 'services' | 'heatmap' | 'engajamento';

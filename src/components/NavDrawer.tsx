@@ -7,9 +7,9 @@ const navItems = [
   { id: 'engajamento' as Pagina, label: 'Score de Engajamento', icon: '⊙' },
   { id: 'services' as Pagina, label: 'Análise de Conclusão de Serviços', icon: '⊙' },
   { id: 'dashboard' as Pagina, label: 'Sinais Implícitos de Valor Percebido', icon: '⊙' },
+   { id: 'heatmap' as Pagina, label: 'Mapa de Calor de Interações', icon: '⊙' },
 //   { id: '' as Pagina, label: 'Taxa de Retorno do Usuário', icon: '⊙' },
 //   { id: '' as Pagina, label: 'Alertas de Comportamento Atípico', icon: '⊙' },
-//   { id: '' as Pagina, label: 'Mapa de Calor de Interações', icon: '⊙' },
 //   { id: '' as Pagina, label: 'Detector de Abandono Inteligente', icon: '⊙' },
 ];
 
