@@ -10,7 +10,7 @@ import {
 import { NavDrawer } from './components/NavDrawer';
 import { useClients } from './hooks/useClients';
 import { useDebouncedValue } from './hooks/useDebouncedValue';
-import { HomePage, LoginPage, CadastroPage, DashboardPage, ServicesPage, ProfilePage, HeatmapPage, HeatmapViewPage, EngajamentoPage } from './pages';
+import { HomePage, LoginPage, CadastroPage, DashboardPage, ServicesPage, ProfilePage, HeatmapPage, HeatmapViewPage, EngajamentoPage, RetornoPage } from './pages';
 import {
   activeAlertsCount,
   aggregateRiskCounts,
@@ -33,6 +33,7 @@ const PAGE_ROUTES = {
   perfil: '/perfil',
   heatmap: '/heatmap',
   engajamento: '/engajamento',
+  retorno: '/retorno',
 } as Record<Pagina, string>;
 
 const PATH_TO_PAGE = {
@@ -44,6 +45,7 @@ const PATH_TO_PAGE = {
   '/perfil': 'perfil',
   '/heatmap': 'heatmap',
   '/engajamento': 'engajamento',
+  '/retorno': 'retorno',
 } as Record<string, Pagina>;
 
 function getPageFromPath(pathname: string): Pagina {
@@ -192,6 +194,18 @@ function AppRouter() {
                 onMenuAbrir={() => setMenuAberto(true)}
                 onNavegar={handleNavigate}
                 clients={clients}
+              />,
+            )
+          }
+        />
+        <Route
+          path="/retorno"
+          element={
+            requireAuth(
+              <RetornoPage
+                nomeUsuario={nomeUsuario}
+                onMenuAbrir={() => setMenuAberto(true)}
+                onNavegar={handleNavigate}
               />,
             )
           }
