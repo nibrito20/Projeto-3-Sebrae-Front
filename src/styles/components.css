@@ -908,7 +908,7 @@
     width: 100vw;
   }
 }
-/* --- Estilos para a Análise de Conclusão --- */
+
 .funnel-card {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
@@ -959,11 +959,6 @@
   font-size: var(--fs-base);
 }
 
-/* ============================================
-   ServiceFunnel — Estilos extraídos
-   ============================================ */
-
-/* Container principal */
 .funnel-wrapper {
   display: flex;
   gap: 24px;
@@ -972,8 +967,6 @@
   border-radius: 20px;
   font-family: sans-serif;
 }
-
-/* ── Área principal do funil ── */
 .funnel-main {
   flex: 2;
   background-color: #e0e0e0;
@@ -982,7 +975,6 @@
   position: relative;
 }
 
-/* Barra de controles (selects + botão) */
 .funnel-controls {
   display: flex;
   gap: 12px;
@@ -1005,7 +997,6 @@
   font-weight: bold;
 }
 
-/* Popover de detalhes */
 .funnel-detalhes-popover {
   position: absolute;
   top: 85px;
@@ -1059,7 +1050,6 @@
   font-weight: bold;
 }
 
-/* SVG do funil */
 .funnel-svg {
   width: 100%;
   height: auto;
@@ -1069,7 +1059,6 @@
   cursor: pointer;
 }
 
-/* ── Sidebar de Overview ── */
 .funnel-sidebar {
   flex: 0.8;
   background-color: #d1d1d1;
@@ -1091,7 +1080,6 @@
   color: #444;
 }
 
-/* Mini preview do funil */
 .funnel-sidebar__preview {
   background-color: white;
   padding: 15px;
@@ -1107,7 +1095,6 @@
   height: auto;
 }
 
-/* Botões da sidebar */
 .funnel-sidebar__actions {
   width: 100%;
   display: flex;
@@ -1131,10 +1118,6 @@
   line-height: 1.6;
   color: #333;
 }
-
-/* ============================================
-   Taxa de Retorno do Usuário
-   ============================================ */
 
 .retorno-page__title {
   align-items: center;
@@ -1423,6 +1406,273 @@
   }
 
   .retorno-streak__content {
+    grid-template-columns: 1fr;
+  }
+}
+
+.abandono-page__title {
+  text-align: left;
+  margin-bottom: var(--sp-4);
+}
+
+.abandono-summary {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--sp-4);
+  margin-bottom: var(--sp-5);
+}
+
+.abandono-card--metric {
+  align-items: center;
+  text-align: center;
+}
+
+.abandono-card__valor--critico {
+  color: var(--risk-high-fg) !important;
+}
+
+.abandono-card__pagina-critica {
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-bold);
+  color: var(--color-primary);
+  margin-top: var(--sp-3);
+  text-align: center;
+  line-height: 1.3;
+}
+
+.abandono-chart-section {
+  margin-bottom: var(--sp-5);
+}
+
+.abandono-card--chart {
+  gap: var(--sp-3);
+}
+
+.abandono-bottom {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--sp-4);
+}
+
+.abandono-funnel {
+  gap: var(--sp-4);
+}
+
+.abandono-funnel__step {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  padding-bottom: var(--sp-3);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.abandono-funnel__step:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.abandono-funnel__label {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-3);
+  flex-wrap: wrap;
+}
+
+.abandono-funnel__page {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  color: var(--color-text);
+}
+
+.abandono-funnel__meta {
+  font-size: var(--fs-xs);
+  color: var(--color-text-muted);
+}
+
+.abandono-funnel__bars {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+}
+
+.abandono-funnel__bar-row {
+  display: grid;
+  grid-template-columns: 64px 1fr 52px;
+  align-items: center;
+  gap: var(--sp-2);
+}
+
+.abandono-funnel__bar-lbl {
+  font-size: var(--fs-xs);
+  color: var(--color-text-muted);
+  font-weight: var(--fw-semibold);
+}
+
+.abandono-funnel__bar-track {
+  background: var(--color-bg);
+  border-radius: 999px;
+  height: 10px;
+  overflow: hidden;
+}
+
+.abandono-funnel__bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width var(--transition-med);
+}
+
+.abandono-funnel__bar-fill--entrada {
+  background: var(--color-accent);
+}
+
+.abandono-funnel__bar-val {
+  font-size: var(--fs-xs);
+  color: var(--color-text-muted);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.abandono-funnel__retention {
+  font-size: var(--fs-xs);
+  color: var(--color-text-muted);
+  text-align: right;
+}
+
+.abandono-funnel__retention strong {
+  color: var(--color-text);
+}
+
+.abandono-ranking {
+  gap: var(--sp-3);
+}
+
+.abandono-ranking__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  flex: 1;
+}
+
+.abandono-ranking__item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-3);
+}
+
+.abandono-ranking__pos {
+  min-width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  border-radius: 50%;
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-bold);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.abandono-ranking__info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.abandono-ranking__page {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  color: var(--color-text);
+}
+
+.abandono-ranking__sub {
+  font-size: var(--fs-xs);
+  color: var(--color-text-muted);
+}
+
+.abandono-ranking__bar-track {
+  background: var(--color-bg);
+  border-radius: 999px;
+  height: 8px;
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+.abandono-ranking__bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width var(--transition-med);
+}
+
+.abandono-ranking__right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--sp-1);
+  min-width: 64px;
+}
+
+.abandono-ranking__taxa {
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-bold);
+  color: var(--color-primary);
+  line-height: 1;
+}
+
+.abandono-ranking__legend {
+  display: flex;
+  gap: var(--sp-2);
+  flex-wrap: wrap;
+  margin-top: var(--sp-2);
+  padding-top: var(--sp-3);
+  border-top: 1px solid var(--color-border);
+}
+
+.abandono-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  white-space: nowrap;
+}
+
+.abandono-badge--critico {
+  background: var(--risk-high-bg);
+  color: var(--risk-high-fg);
+}
+
+.abandono-badge--alerta {
+  background: var(--risk-med-bg);
+  color: var(--risk-med-fg);
+}
+
+.abandono-badge--normal {
+  background: var(--risk-low-bg);
+  color: var(--risk-low-fg);
+}
+
+/* ---- Responsivo ---- */
+@media (max-width: 1100px) {
+  .abandono-summary {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .abandono-bottom {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .abandono-summary {
     grid-template-columns: 1fr;
   }
 }

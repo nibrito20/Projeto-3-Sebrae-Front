@@ -8,3 +8,4 @@ export { HeatmapPage } from './HeatmapPage';
 export { HeatmapViewPage } from './HeatmapViewPage';
 export { EngajamentoPage } from './EngajamentoPage';
 export { RetornoPage } from './RetornoPage';
+export { AbandonoPage } from './AbandonoPage';

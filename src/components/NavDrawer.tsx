@@ -11,6 +11,7 @@ const navItems = [
    { id: 'retorno' as Pagina, label: 'Taxa de Retorno do Usuário', icon: '⊙' },
 //   { id: '' as Pagina, label: 'Alertas de Comportamento Atípico', icon: '⊙' },
 //   { id: '' as Pagina, label: 'Detector de Abandono Inteligente', icon: '⊙' },
+  { id: 'abandono' as Pagina, label: 'Detector de Abandono Inteligente', icon: '⊙' },
 ];
 
 interface NavDrawerProps {

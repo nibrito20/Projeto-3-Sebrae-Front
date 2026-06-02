@@ -10,7 +10,7 @@ import {
 import { NavDrawer } from './components/NavDrawer';
 import { useClients } from './hooks/useClients';
 import { useDebouncedValue } from './hooks/useDebouncedValue';
-import { HomePage, LoginPage, CadastroPage, DashboardPage, ServicesPage, ProfilePage, HeatmapPage, HeatmapViewPage, EngajamentoPage, RetornoPage } from './pages';
+import { HomePage, LoginPage, CadastroPage, DashboardPage, ServicesPage, ProfilePage, HeatmapPage, HeatmapViewPage, EngajamentoPage, RetornoPage, AbandonoPage } from './pages'; // ALTERADO — adicionado AbandonoPage
 import {
   activeAlertsCount,
   aggregateRiskCounts,
@@ -34,6 +34,8 @@ const PAGE_ROUTES = {
   heatmap: '/heatmap',
   engajamento: '/engajamento',
   retorno: '/retorno',
+  // NOVO — rota para Detector de Abandono Inteligente
+  abandono: '/abandono',
 } as Record<Pagina, string>;
 
 const PATH_TO_PAGE = {
@@ -46,6 +48,8 @@ const PATH_TO_PAGE = {
   '/heatmap': 'heatmap',
   '/engajamento': 'engajamento',
   '/retorno': 'retorno',
+  // NOVO — mapeamento de path para a página de abandono
+  '/abandono': 'abandono',
 } as Record<string, Pagina>;
 
 function getPageFromPath(pathname: string): Pagina {
@@ -203,6 +207,19 @@ function AppRouter() {
           element={
             requireAuth(
               <RetornoPage
+                nomeUsuario={nomeUsuario}
+                onMenuAbrir={() => setMenuAberto(true)}
+                onNavegar={handleNavigate}
+              />,
+            )
+          }
+        />
+        {}
+        <Route
+          path="/abandono"
+          element={
+            requireAuth(
+              <AbandonoPage
                 nomeUsuario={nomeUsuario}
                 onMenuAbrir={() => setMenuAberto(true)}
                 onNavegar={handleNavigate}
