@@ -106,4 +106,4 @@ export interface HeatmapPage {
 
 export type InactivityLevel = 'high' | 'med' | 'low';
 export type EfficiencyLevel = 'alert' | 'warn' | 'ok';
-export type Pagina = 'login' | 'cadastro' | 'dashboard' | 'home' | 'perfil' | 'services' | 'heatmap' | 'engajamento' | 'retorno' | 'abandono';
+export type Pagina = 'login' | 'cadastro' | 'dashboard' | 'home' | 'perfil' | 'services' | 'heatmap' | 'engajamento' | 'retorno' | 'abandono' | 'alertas';

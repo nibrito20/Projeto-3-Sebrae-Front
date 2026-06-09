@@ -1676,3 +1676,234 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════
+   ALERTAS PAGE
+   Adicione este bloco no arquivo CSS global do projeto
+   (o mesmo onde estão os estilos de .retorno-card, etc.)
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Layout da página ─────────────────────────────────────── */
+
+.alertas-page__title {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-5);
+}
+
+/* ── Cards de resumo (4 métricas) ────────────────────────── */
+
+.alertas-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: var(--sp-5);
+}
+
+.alertas-card--metric {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 1.1rem 1.25rem;
+}
+
+.alertas-card__icon {
+  font-size: 22px;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.alertas-card__icon--red    { background: #FEE2E2; }
+.alertas-card__icon--orange { background: #FFEDD5; }
+.alertas-card__icon--yellow { background: #FEF9C3; }
+.alertas-card__icon--green  { background: #DCFCE7; }
+
+.alertas-card__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.alertas-card__variacao {
+  font-size: 12px !important;
+  margin-top: 2px;
+}
+
+.alertas-card__variacao--up   { color: #DC2626; }
+.alertas-card__variacao--down { color: #16A34A; }
+
+/* ── Gráfico de tendência ────────────────────────────────── */
+
+.alertas-chart-section {
+  margin-bottom: var(--sp-5);
+}
+
+.alertas-card--chart {
+  padding: 1.25rem;
+}
+
+/* ── Lista de alertas ────────────────────────────────────── */
+
+.alertas-list-section {
+  margin-bottom: var(--sp-5);
+}
+
+.alertas-list__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 1rem;
+}
+
+.alertas-list__filtros {
+  display: flex;
+  gap: 6px;
+}
+
+.alertas-filtro-btn {
+  font-size: 13px;
+  padding: 4px 14px;
+  border-radius: 20px;
+  border: 1px solid #D1D5DB;
+  background: transparent;
+  color: #5A6478;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.alertas-filtro-btn:hover {
+  background: #F3F4F6;
+}
+
+.alertas-filtro-btn--ativo {
+  background: #004587;
+  color: #fff;
+  border-color: #004587;
+}
+
+/* ── Itens da lista ──────────────────────────────────────── */
+
+.alertas-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.alerta-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid #F0F2F5;
+  transition: background 0.1s;
+}
+
+.alerta-item:last-child {
+  border-bottom: none;
+}
+
+.alerta-item__icone {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.alerta-item__icone--queda {
+  background: #FEE2E2;
+  color: #DC2626;
+}
+
+.alerta-item__icone--pico {
+  background: #FEF9C3;
+  color: #CA8A04;
+}
+
+.alerta-item__corpo {
+  flex: 1;
+  min-width: 0;
+}
+
+.alerta-item__titulo {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1E293B;
+  margin: 0 0 3px;
+}
+
+.alerta-item__meta {
+  font-size: 12px;
+  color: #5A6478;
+  margin: 0;
+}
+
+.alerta-item__direita {
+  display: flex;
+  gap: 24px;
+  flex-shrink: 0;
+  text-align: right;
+}
+
+.alerta-item__col {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.alerta-item__label {
+  font-size: 11px;
+  color: #9CA3AF;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.alerta-item__impacto {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.alerta-item__impacto--negativo { color: #DC2626; }
+.alerta-item__impacto--positivo { color: #CA8A04; }
+
+.alerta-item__tempo {
+  font-size: 13px;
+  color: #5A6478;
+}
+
+/* ── Botão "ver todos" ───────────────────────────────────── */
+
+.alertas-list__ver-todos {
+  text-align: center;
+  padding-top: 1rem;
+  border-top: 1px solid #F0F2F5;
+  margin-top: 4px;
+}
+
+.alertas-ver-todos-btn {
+  font-size: 13px;
+  color: #004587;
+  background: transparent;
+  border: 1px solid #004587;
+  border-radius: 6px;
+  padding: 6px 20px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.alertas-ver-todos-btn:hover {
+  background: #EFF6FF;
+}
