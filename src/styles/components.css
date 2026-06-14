@@ -1677,14 +1677,6 @@
   }
 }
 
-/* ═══════════════════════════════════════════════════════════
-   ALERTAS PAGE
-   Adicione este bloco no arquivo CSS global do projeto
-   (o mesmo onde estão os estilos de .retorno-card, etc.)
-   ═══════════════════════════════════════════════════════════ */
-
-/* ── Layout da página ─────────────────────────────────────── */
-
 .alertas-page__title {
   display: flex;
   align-items: flex-start;
@@ -1693,8 +1685,6 @@
   gap: var(--sp-3);
   margin-bottom: var(--sp-5);
 }
-
-/* ── Cards de resumo (4 métricas) ────────────────────────── */
 
 .alertas-summary {
   display: grid;
@@ -1731,15 +1721,18 @@
   min-width: 0;
 }
 
+.alertas-card__body .retorno-card__title {
+  font-family: 'Inter', sans-serif;
+}
+
 .alertas-card__variacao {
   font-size: 12px !important;
   margin-top: 2px;
+  font-family: 'Inter', sans-serif;
 }
 
 .alertas-card__variacao--up   { color: #DC2626; }
 .alertas-card__variacao--down { color: #16A34A; }
-
-/* ── Gráfico de tendência ────────────────────────────────── */
 
 .alertas-chart-section {
   margin-bottom: var(--sp-5);
@@ -1749,10 +1742,9 @@
   padding: 1.25rem;
 }
 
-/* ── Lista de alertas ────────────────────────────────────── */
-
 .alertas-list-section {
   margin-bottom: var(--sp-5);
+  font-family: 'Inter', sans-serif;
 }
 
 .alertas-list__header {
@@ -1789,8 +1781,6 @@
   color: #fff;
   border-color: #004587;
 }
-
-/* ── Itens da lista ──────────────────────────────────────── */
 
 .alertas-list {
   list-style: none;
@@ -1883,8 +1873,6 @@
   font-size: 13px;
   color: #5A6478;
 }
-
-/* ── Botão "ver todos" ───────────────────────────────────── */
 
 .alertas-list__ver-todos {
   text-align: center;

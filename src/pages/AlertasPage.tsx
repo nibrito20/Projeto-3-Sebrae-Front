@@ -18,22 +18,30 @@ Chart.register(CategoryScale, LinearScale, PointElement, LineElement, Filler, To
 
 // ─── Tipos ────────────────────────────────────────────────────────────────────
 
-interface Alerta {
-  id: number;
-  dataHora: string;       // LocalDateTime serializado como ISO string pelo Spring
-  tipo: string;           // "QUEDA" | "PICO"
-  valorDetectado: number;
-  mediaHistorica: number;
-  desvioPadrao: number;
-  descricao: string;
+interface TipoAlerta {
+  tipo: string;
+  quantidade: number;
+  comparacao: string;
 }
 
-// O back end ainda não retorna canal/afetados — quando o endpoint evoluir,
-// adicione os campos aqui e remova os valores de fallback abaixo.
+interface AlertaItem {
+  tipo: string;
+  canal: string;
+  clientesAfetados: number;
+  impactoPercentual: number;
+  detectadoEm: string;
+  descricao: string;
+}
 
 interface TendenciaPoint {
   data: string;
   total: number;
+}
+
+interface AlertasResponse {
+  tiposDeAlertas: TipoAlerta[];
+  listaDeAlertas: AlertaItem[];
+  tendencia: TendenciaPoint[];
 }
 
 interface AlertasPageProps {
@@ -44,37 +52,31 @@ interface AlertasPageProps {
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
-function formatarDataHora(iso: string): string {
-  const d = new Date(iso);
-  const agora = new Date();
-  const diffMs = agora.getTime() - d.getTime();
-  const diffH = Math.floor(diffMs / 3600000);
-  if (diffH < 1) return 'Agora há pouco';
-  if (diffH < 24) return `há ${diffH}h`;
-  return d.toLocaleDateString('pt-BR');
-}
-
-function impactoPercentual(valorDetectado: number, media: number): number {
-  if (media === 0) return 0;
-  return Math.round(((valorDetectado - media) / media) * 100);
-}
-
-function tipoLabel(tipo: string): string {
-  if (tipo === 'QUEDA') return 'Queda de acesso';
-  if (tipo === 'PICO') return 'Pico atípico';
-  return 'Comportamento atípico';
-}
-
 function tipoClasse(tipo: string): string {
   if (tipo === 'QUEDA') return 'alerta-item--queda';
   if (tipo === 'PICO') return 'alerta-item--pico';
   return 'alerta-item--atipico';
 }
 
+function iconeCard(tipo: string): string {
+  if (tipo === 'Alertas Ativos') return '🔔';
+  if (tipo === 'Alertas Críticos') return '⚠️';
+  if (tipo === 'Em Investigação') return '🔍';
+  return '✅';
+}
+
+function corIconeCard(tipo: string): string {
+  if (tipo === 'Alertas Ativos') return 'alertas-card__icon--red';
+  if (tipo === 'Alertas Críticos') return 'alertas-card__icon--orange';
+  if (tipo === 'Em Investigação') return 'alertas-card__icon--yellow';
+  return 'alertas-card__icon--green';
+}
+
 // ─── Componente ───────────────────────────────────────────────────────────────
 
 export function AlertasPage({ nomeUsuario, onMenuAbrir, onNavegar }: AlertasPageProps) {
-  const [alertas, setAlertas] = useState<Alerta[]>([]);
+  const [tiposAlertas, setTiposAlertas] = useState<TipoAlerta[]>([]);
+  const [alertas, setAlertas] = useState<AlertaItem[]>([]);
   const [tendencia, setTendencia] = useState<TendenciaPoint[]>([]);
   const [loading, setLoading] = useState(true);
   const [erro, setErro] = useState<string | null>(null);
@@ -89,41 +91,19 @@ export function AlertasPage({ nomeUsuario, onMenuAbrir, onNavegar }: AlertasPage
     setLoading(true);
     setErro(null);
 
-    fetch(`${import.meta.env.VITE_API_URL}/monitoramento/alertas`)
+    fetch(`${import.meta.env.VITE_API_URL}/api/alertas-comportamento`)
       .then((res) => {
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        return res.json() as Promise<Alerta[]>;
+        return res.json() as Promise<AlertasResponse>;
       })
       .then((data) => {
-        setAlertas(data);
-
-        // Monta pontos de tendência agrupando por data
-        const porData: Record<string, number> = {};
-        data.forEach((a) => {
-          const dia = new Date(a.dataHora).toLocaleDateString('pt-BR', {
-            day: '2-digit',
-            month: '2-digit',
-          });
-          porData[dia] = (porData[dia] ?? 0) + 1;
-        });
-        const pontos = Object.entries(porData)
-          .sort(([a], [b]) => a.localeCompare(b))
-          .map(([data, total]) => ({ data, total }));
-        setTendencia(pontos);
+        setTiposAlertas(data.tiposDeAlertas);
+        setAlertas(data.listaDeAlertas);
+        setTendencia(data.tendencia);
       })
       .catch(() => setErro('Não foi possível carregar os alertas.'))
       .finally(() => setLoading(false));
   }, []);
-
-  // ── Métricas de resumo ────────────────────────────────────────────────────
-
-  const totalAtivos   = alertas.length;
-  const totalCriticos = alertas.filter((a) => {
-    const imp = Math.abs(impactoPercentual(a.valorDetectado, a.mediaHistorica));
-    return imp >= 30;
-  }).length;
-  const emInvestigacao = 0;   // campo futuro do back end
-  const resolvidosSemana = 0; // campo futuro do back end
 
   // ── Filtro e paginação ────────────────────────────────────────────────────
 
@@ -171,10 +151,7 @@ export function AlertasPage({ nomeUsuario, onMenuAbrir, onNavegar }: AlertasPage
     scales: {
       y: {
         beginAtZero: true,
-        ticks: {
-          stepSize: 10,
-          color: '#5A6478',
-        },
+        ticks: { stepSize: 10, color: '#5A6478' },
         grid: { color: '#E1E5EB' },
       },
       x: {
@@ -213,59 +190,20 @@ export function AlertasPage({ nomeUsuario, onMenuAbrir, onNavegar }: AlertasPage
           <>
             {/* ── Cards de resumo ────────────────────────────────────────── */}
             <section className="alertas-summary" aria-label="Resumo de alertas">
-
-              <article className="retorno-card alertas-card--metric alertas-card--ativos">
-                <div className="alertas-card__icon alertas-card__icon--red" aria-hidden="true">
-                  🔔
-                </div>
-                <div className="alertas-card__body">
-                  <h2 className="retorno-card__title">Alertas Ativos</h2>
-                  <div className="retorno-card__taxa-valor">{totalAtivos}</div>
-                  <p className="retorno-card__taxa-desc alertas-card__variacao alertas-card__variacao--up">
-                    ▲ 8% vs período anterior
-                  </p>
-                </div>
-              </article>
-
-              <article className="retorno-card alertas-card--metric alertas-card--criticos">
-                <div className="alertas-card__icon alertas-card__icon--orange" aria-hidden="true">
-                  ⚠️
-                </div>
-                <div className="alertas-card__body">
-                  <h2 className="retorno-card__title">Alertas Críticos</h2>
-                  <div className="retorno-card__taxa-valor">{totalCriticos}</div>
-                  <p className="retorno-card__taxa-desc alertas-card__variacao alertas-card__variacao--up">
-                    ▲ 33% vs período anterior
-                  </p>
-                </div>
-              </article>
-
-              <article className="retorno-card alertas-card--metric alertas-card--investigacao">
-                <div className="alertas-card__icon alertas-card__icon--yellow" aria-hidden="true">
-                  🔍
-                </div>
-                <div className="alertas-card__body">
-                  <h2 className="retorno-card__title">Em Investigação</h2>
-                  <div className="retorno-card__taxa-valor">{emInvestigacao}</div>
-                  <p className="retorno-card__taxa-desc alertas-card__variacao alertas-card__variacao--down">
-                    ▼ 38% vs período anterior
-                  </p>
-                </div>
-              </article>
-
-              <article className="retorno-card alertas-card--metric alertas-card--resolvidos">
-                <div className="alertas-card__icon alertas-card__icon--green" aria-hidden="true">
-                  ✅
-                </div>
-                <div className="alertas-card__body">
-                  <h2 className="retorno-card__title">Resolvidos essa semana</h2>
-                  <div className="retorno-card__taxa-valor">{resolvidosSemana}</div>
-                  <p className="retorno-card__taxa-desc alertas-card__variacao alertas-card__variacao--down">
-                    ▼ 33% vs período anterior
-                  </p>
-                </div>
-              </article>
-
+              {tiposAlertas.map((t) => (
+                <article key={t.tipo} className="retorno-card alertas-card--metric">
+                  <div className={`alertas-card__icon ${corIconeCard(t.tipo)}`} aria-hidden="true">
+                    {iconeCard(t.tipo)}
+                  </div>
+                  <div className="alertas-card__body">
+                    <h2 className="retorno-card__title">{t.tipo}</h2>
+                    <div className="retorno-card__taxa-valor">{t.quantidade}</div>
+                    <p className="retorno-card__taxa-desc alertas-card__variacao">
+                      {t.comparacao}
+                    </p>
+                  </div>
+                </article>
+              ))}
             </section>
 
             {/* ── Gráfico de tendência ───────────────────────────────────── */}
@@ -312,40 +250,35 @@ export function AlertasPage({ nomeUsuario, onMenuAbrir, onNavegar }: AlertasPage
                   <div className="table-empty">Nenhum alerta encontrado.</div>
                 ) : (
                   <ul className="alertas-list" role="list">
-                    {alertasExibidos.map((alerta) => {
-                      const imp = impactoPercentual(alerta.valorDetectado, alerta.mediaHistorica);
-                      const impNeg = imp < 0;
-                      return (
-                        <li key={alerta.id} className={`alerta-item ${tipoClasse(alerta.tipo)}`}>
+                    {alertasExibidos.map((alerta, index) => (
+                      <li key={index} className={`alerta-item ${tipoClasse(alerta.tipo)}`}>
 
-                          <div className={`alerta-item__icone alerta-item__icone--${alerta.tipo === 'QUEDA' ? 'queda' : 'pico'}`} aria-hidden="true">
-                            {alerta.tipo === 'QUEDA' ? '↓' : '↑'}
+                        <div className={`alerta-item__icone alerta-item__icone--${alerta.tipo === 'QUEDA' ? 'queda' : 'pico'}`} aria-hidden="true">
+                          {alerta.tipo === 'QUEDA' ? '↓' : '↑'}
+                        </div>
+
+                        <div className="alerta-item__corpo">
+                          <p className="alerta-item__titulo">{alerta.descricao}</p>
+                          <p className="alerta-item__meta">
+                            Canal: {alerta.canal}&nbsp;&nbsp;·&nbsp;&nbsp;Clientes afetados: {alerta.clientesAfetados}
+                          </p>
+                        </div>
+
+                        <div className="alerta-item__direita">
+                          <div className="alerta-item__col">
+                            <span className="alerta-item__label">Impacto</span>
+                            <span className={`alerta-item__impacto ${alerta.impactoPercentual < 0 ? 'alerta-item__impacto--negativo' : 'alerta-item__impacto--positivo'}`}>
+                              {alerta.impactoPercentual > 0 ? '+' : ''}{alerta.impactoPercentual}%
+                            </span>
                           </div>
-
-                          <div className="alerta-item__corpo">
-                            <p className="alerta-item__titulo">{tipoLabel(alerta.tipo)}</p>
-                            <p className="alerta-item__meta">
-                              Canal: —&nbsp;&nbsp;·&nbsp;&nbsp;Clientes afetados: —
-                            </p>
-                            {/* Canal e afetados serão preenchidos quando o back end evoluir */}
+                          <div className="alerta-item__col">
+                            <span className="alerta-item__label">Detectado</span>
+                            <span className="alerta-item__tempo">{alerta.detectadoEm}</span>
                           </div>
+                        </div>
 
-                          <div className="alerta-item__direita">
-                            <div className="alerta-item__col">
-                              <span className="alerta-item__label">Impacto</span>
-                              <span className={`alerta-item__impacto ${impNeg ? 'alerta-item__impacto--negativo' : 'alerta-item__impacto--positivo'}`}>
-                                {imp > 0 ? '+' : ''}{imp}%
-                              </span>
-                            </div>
-                            <div className="alerta-item__col">
-                              <span className="alerta-item__label">Detectado</span>
-                              <span className="alerta-item__tempo">{formatarDataHora(alerta.dataHora)}</span>
-                            </div>
-                          </div>
-
-                        </li>
-                      );
-                    })}
+                      </li>
+                    ))}
                   </ul>
                 )}
 
