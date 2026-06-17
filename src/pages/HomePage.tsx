@@ -43,6 +43,20 @@ export function HomePage({ nomeUsuario, onNavegar, onMenuAbrir }: HomePageProps)
           <h1>Bem-vindo ao painel do Sebrae</h1>
         </div>
 
+        <div className="home-page__score-wrap">
+          <div className="home-page__score-ring">
+            <svg viewBox="0 0 160 160" aria-hidden="true">
+              <circle cx="80" cy="80" r="70" className="home-page__score-track" />
+              <circle cx="80" cy="80" r="70" className="home-page__score-fill" />
+            </svg>
+            <div className="home-page__score-center">
+              <span className="home-page__score-value">7,45</span>
+            </div>
+          </div>
+          <p className="home-page__score-updated">Última atualização: há 2 horas.</p>
+          <p className="home-page__score-desc">Hoje, a experiência do cliente do Sebrae está mediana.</p>
+        </div>
+
         <section className="home-page__services" aria-label="Principais recursos">
           <div className="home-page__service-grid">
             {HOME_FEATURES.map((feature) => (
