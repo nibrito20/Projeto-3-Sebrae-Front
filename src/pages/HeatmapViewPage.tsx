@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Header } from '../components/Header';
 import { HeatmapOverlay } from '../components/HeatmapOverlay';
+import { LoadingScreen } from '../components/LoadingScreen';
 import { useHeatmap } from '../hooks/useHeatmap';
 import type { HeatmapPage as HeatmapPageType, Pagina } from '../types';
 
@@ -61,7 +62,7 @@ export function HeatmapViewPage({
           </h2>
         </div>
 
-        {loading && <p className="heatmap-view-page__status">Carregando dados...</p>}
+        {loading && <LoadingScreen message="Carregando dados..." />}
         {error && <p className="heatmap-view-page__status heatmap-view-page__status--error">{error}</p>}
 
         <div className="heatmap-view-page__canvas">

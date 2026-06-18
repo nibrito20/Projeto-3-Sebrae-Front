@@ -12,6 +12,7 @@ import {
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import { Header } from '../components/Header';
+import { LoadingScreen } from '../components/LoadingScreen';
 import type { Pagina } from '../types';
 
 Chart.register(CategoryScale, LinearScale, PointElement, LineElement, Filler, Tooltip, Legend);
@@ -183,7 +184,7 @@ export function AlertasPage({ nomeUsuario, onMenuAbrir, onNavegar }: AlertasPage
         </div>
 
         {loading ? (
-          <div className="table-empty">Carregando alertas...</div>
+          <LoadingScreen message="Carregando alertas..." />
         ) : erro ? (
           <div className="table-empty">{erro}</div>
         ) : (

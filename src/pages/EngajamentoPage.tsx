@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Header } from '../components/Header';
+import { LoadingScreen } from '../components/LoadingScreen';
 import type { ClientEnriched, EngagementRankingItem, Pagina } from '../types';
 import { fetchEngagementRanking } from '../lib/data';
 
@@ -76,7 +77,7 @@ export function EngajamentoPage({ nomeUsuario, onMenuAbrir, onNavegar, clients }
           </div>
 
           {loading ? (
-            <div className="table-empty">Carregando ranking...</div>
+            <LoadingScreen message="Carregando ranking..." />
           ) : error ? (
             <div className="table-empty">{error}</div>
           ) : (

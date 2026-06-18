@@ -8,6 +8,7 @@ import {
   useNavigate,
 } from 'react-router-dom';
 import { NavDrawer } from './components/NavDrawer';
+import { LoadingScreen } from './components/LoadingScreen';
 import { useClients } from './hooks/useClients';
 import { useDebouncedValue } from './hooks/useDebouncedValue';
 import { HomePage, LoginPage, CadastroPage, DashboardPage, ServicesPage, ProfilePage, HeatmapPage, HeatmapViewPage, EngajamentoPage, RetornoPage, AbandonoPage, AlertasPage, ConversaPage } from './pages';
@@ -119,7 +120,7 @@ function AppRouter() {
     return nomeUsuario ? element : <Navigate to="/login" replace />;
   };
 
-  if (loading || !ctx) return <div>Carregando...</div>;
+  if (loading || !ctx) return <LoadingScreen message="Carregando..." />;
 
   return (
     <>

@@ -12,6 +12,7 @@ import {
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import { Header } from '../components/Header';
+import { LoadingScreen } from '../components/LoadingScreen';
 import type { Pagina } from '../types';
 
 Chart.register(CategoryScale, LinearScale, PointElement, LineElement, Filler, Tooltip, Legend);
@@ -160,7 +161,7 @@ export function AbandonoPage({ nomeUsuario, onMenuAbrir, onNavegar }: AbandonoPa
 
         {/* ---- Conteúdo condicional ---- */}
         {loading ? (
-          <div className="table-empty">Carregando dados de abandono...</div>
+          <LoadingScreen message="Carregando dados de abandono..." />
         ) : erro ? (
           <div className="table-empty">{erro}</div>
         ) : (
