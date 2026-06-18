@@ -42,14 +42,18 @@
   display: flex;
   align-items: center;
   max-width: 0;
-  overflow: hidden;
-  transition: max-width 0.25s ease, opacity 0.2s ease;
+  overflow: visible;
+  transition: max-width 0.25s ease, opacity 0.2s ease, visibility 0.2s ease;
   opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
 }
 
 .app-header__search.is-open {
   max-width: 320px;
   opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
 }
 
 .app-header__search-form {
