@@ -1,4 +1,3 @@
-import { CalendarIcon } from './icons/CalendarIcon';
 import { SearchIcon } from './icons/SearchIcon';
 
 export interface FiltersProps {
@@ -9,9 +8,9 @@ export interface FiltersProps {
 }
 
 const PERIOD_OPTIONS = [
-  { value: 7, label: 'Últimos 7 dias' },
-  { value: 30, label: 'Últimos 30 dias' },
-  { value: 90, label: 'Últimos 90 dias' },
+  { value: 30, label: 'Maio/2026' },
+  { value: 60, label: 'Abril/2026' },
+  { value: 90, label: 'Março/2026' },
 ] as const;
 
 export function Filters({
@@ -23,7 +22,6 @@ export function Filters({
   return (
     <section className="filters" aria-label="Filtros">
       <label className="filters__field" htmlFor="filter-period">
-        <CalendarIcon />
         <select
           id="filter-period"
           aria-label="Filtrar por período"

@@ -113,10 +113,6 @@ export function RetornoPage({ nomeUsuario, onMenuAbrir, onNavegar }: RetornoPage
 
         <div className="retorno-page__toolbar">
           <span className="retorno-page__periodo">01/05/2026 - 31/05/2026</span>
-          <button type="button" className="retorno-page__filtros">
-            Filtros
-            <span aria-hidden="true">▾</span>
-          </button>
         </div>
 
         <section className="retorno-grid">
