@@ -37,6 +37,75 @@
   gap: 16px;
 }
 
+.app-header__search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  max-width: 0;
+  overflow: hidden;
+  transition: max-width 0.25s ease, opacity 0.2s ease;
+  opacity: 0;
+}
+
+.app-header__search.is-open {
+  max-width: 320px;
+  opacity: 1;
+}
+
+.app-header__search-form {
+  width: 100%;
+}
+
+.app-header__search-input {
+  width: 100%;
+  min-width: 200px;
+  height: 40px;
+  border: 1px solid #D1D5DB;
+  border-radius: 999px;
+  padding: 0 16px;
+  background: #F8FAFC;
+  color: #111827;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.app-header__search-input:focus {
+  border-color: #2A4FDA;
+  box-shadow: 0 0 0 4px rgba(42, 79, 250, 0.12);
+}
+
+.app-header__search-suggestions {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  background: #fff;
+  border: 1px solid #E5E7EB;
+  border-radius: 16px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+  z-index: 10;
+  display: grid;
+  gap: 0.25rem;
+  padding: 0.5rem;
+}
+
+.app-header__search-suggestion {
+  width: 100%;
+  text-align: left;
+  border: none;
+  background: transparent;
+  color: #111827;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.app-header__search-suggestion:hover,
+.app-header__search-suggestion:focus-visible {
+  background: #EFF6FF;
+}
+
 .app-header__icon-btn {
   display: inline-flex;
   align-items: center;
@@ -225,7 +294,17 @@
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   padding: var(--sp-4);
-  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
+}
+
+.home-page__service-card:hover,
+.home-page__service-card:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.08);
+  border-color: rgba(42, 79, 250, 0.25);
 }
 
 .home-page__service-card:hover {

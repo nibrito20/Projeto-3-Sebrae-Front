@@ -10,3 +10,4 @@ export { EngajamentoPage } from './EngajamentoPage';
 export { RetornoPage } from './RetornoPage';
 export { AbandonoPage } from './AbandonoPage';
 export { AlertasPage } from './AlertasPage';
+export { ConversaPage } from './ConversaPage';

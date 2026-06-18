@@ -10,7 +10,7 @@ import {
 import { NavDrawer } from './components/NavDrawer';
 import { useClients } from './hooks/useClients';
 import { useDebouncedValue } from './hooks/useDebouncedValue';
-import { HomePage, LoginPage, CadastroPage, DashboardPage, ServicesPage, ProfilePage, HeatmapPage, HeatmapViewPage, EngajamentoPage, RetornoPage, AbandonoPage, AlertasPage } from './pages'; // ALTERADO — adicionado AbandonoPage
+import { HomePage, LoginPage, CadastroPage, DashboardPage, ServicesPage, ProfilePage, HeatmapPage, HeatmapViewPage, EngajamentoPage, RetornoPage, AbandonoPage, AlertasPage, ConversaPage } from './pages';
 import {
   activeAlertsCount,
   aggregateRiskCounts,
@@ -36,6 +36,7 @@ const PAGE_ROUTES = {
   retorno: '/retorno',
   abandono: '/abandono',
   alertas: '/alertas',
+  conversa: '/conversa',
 } as Record<Pagina, string>;
 
 const PATH_TO_PAGE = {
@@ -50,6 +51,7 @@ const PATH_TO_PAGE = {
   '/retorno': 'retorno',
   '/abandono': 'abandono',
   '/alertas': 'alertas',
+  '/conversa': 'conversa',
 } as Record<string, Pagina>;
 
 function getPageFromPath(pathname: string): Pagina {
@@ -238,6 +240,18 @@ function AppRouter() {
                 servicos={servicos}
                 servicoSelecionado={servicoSelecionado}
                 onServiceChange={(service) => setServicoSelecionado(servicos.indexOf(service))}
+              />,
+            )
+          }
+        />
+        <Route
+          path="/conversa"
+          element={
+            requireAuth(
+              <ConversaPage
+                nomeUsuario={nomeUsuario}
+                onMenuAbrir={() => setMenuAberto(true)}
+                onNavegar={handleNavigate}
               />,
             )
           }

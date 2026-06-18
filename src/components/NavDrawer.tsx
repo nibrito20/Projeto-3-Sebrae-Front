@@ -1,16 +1,26 @@
 import { useEffect, useRef } from 'react';
 import { CloseIcon } from './icons/CloseIcon';
+import homeIcon from '../assets/homepageicon.png';
+import analysisIcon from '../assets/Análise de Conclusão de Serviços.png';
+import returnRateIcon from '../assets/Taxa de Retorno do Usuário.png';
+import abandonmentIcon from '../assets/Detector de abandono inteligente.png';
+import conversationIcon from '../assets/Na Conversa.png';
+import heatmapIcon from '../assets/Mapa de Calor de Interações.png';
+import scoreIcon from '../assets/Score de Engajamento.png';
+import alertsIcon from '../assets/Alertas de Comportamento Atípico.png';
+import signalsIcon from '../assets/Sinais Implícitos de Valor Percebido.png';
 import type { Pagina } from '../types';
 
 const navItems = [
-  { id: 'home' as Pagina, label: 'Início', icon: '⊙' },
-  { id: 'engajamento' as Pagina, label: 'Score de Engajamento', icon: '⊙' },
-  { id: 'services' as Pagina, label: 'Análise de Conclusão de Serviços', icon: '⊙' },
-  { id: 'dashboard' as Pagina, label: 'Sinais Implícitos de Valor Percebido', icon: '⊙' },
-  { id: 'heatmap' as Pagina, label: 'Mapa de Calor de Interações', icon: '⊙' },
-  { id: 'retorno' as Pagina, label: 'Taxa de Retorno do Usuário', icon: '⊙' },
-  { id: 'alertas' as Pagina, label: 'Alertas de Comportamento Atípico', icon: '⊙' },
-  { id: 'abandono' as Pagina, label: 'Detector de Abandono Inteligente', icon: '⊙' },
+  { id: 'home' as Pagina, label: 'Início', icon: homeIcon },
+  { id: 'engajamento' as Pagina, label: 'Score de Engajamento', icon: scoreIcon },
+  { id: 'services' as Pagina, label: 'Análise de Conclusão de Serviços', icon: analysisIcon },
+  { id: 'dashboard' as Pagina, label: 'Sinais Implícitos de Valor Percebido', icon: signalsIcon },
+  { id: 'heatmap' as Pagina, label: 'Mapa de Calor de Interações', icon: heatmapIcon },
+  { id: 'retorno' as Pagina, label: 'Taxa de Retorno do Usuário', icon: returnRateIcon },
+  { id: 'alertas' as Pagina, label: 'Alertas de Comportamento Atípico', icon: alertsIcon },
+  { id: 'abandono' as Pagina, label: 'Detector de Abandono Inteligente', icon: abandonmentIcon },
+  { id: 'conversa' as Pagina, label: 'Na Conversa', icon: conversationIcon },
 ];
 
 interface NavDrawerProps {
@@ -88,7 +98,12 @@ export function NavDrawer({ isOpen, onClose, onNavegar, paginaAtiva }: NavDrawer
               className={`nav-drawer__item${paginaAtiva === item.id ? ' is-active' : ''}`}
               onClick={() => { onNavegar(item.id); onClose(); }}
             >
-              {item.label}
+              {item.icon ? (
+                <span className="nav-drawer__item-icon">
+                  <img src={item.icon} alt="" aria-hidden="true" />
+                </span>
+              ) : null}
+              <span>{item.label}</span>
             </button>
           ))}
         </nav>

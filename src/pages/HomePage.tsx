@@ -11,14 +11,14 @@ import signalsIcon from '../assets/Sinais Implícitos de Valor Percebido.png';
 import type { Pagina } from '../types';
 
 const HOME_FEATURES = [
-  { label: 'Análise de Conclusão de Serviços', icon: analysisIcon },
-  { label: 'Sinais Implícitos de Valor Percebido', icon: signalsIcon },
-  { label: 'Taxa de Retorno do Usuário', icon: returnRateIcon },
-  { label: 'Score de Engajamento', icon: scoreIcon },
-  { label: 'Alertas de Comportamento Atípico', icon: alertsIcon },
-  { label: 'Mapa de Calor de Interações', icon: heatmapIcon },
-  { label: 'Detector de Abandono Inteligente', icon: abandonmentIcon },
-  { label: 'Na Conversa', icon: conversationIcon },
+  { label: 'Análise de Conclusão de Serviços', icon: analysisIcon, pagina: 'services' as Pagina },
+  { label: 'Sinais Implícitos de Valor Percebido', icon: signalsIcon, pagina: 'dashboard' as Pagina },
+  { label: 'Taxa de Retorno do Usuário', icon: returnRateIcon, pagina: 'retorno' as Pagina },
+  { label: 'Score de Engajamento', icon: scoreIcon, pagina: 'engajamento' as Pagina },
+  { label: 'Alertas de Comportamento Atípico', icon: alertsIcon, pagina: 'alertas' as Pagina },
+  { label: 'Mapa de Calor de Interações', icon: heatmapIcon, pagina: 'heatmap' as Pagina },
+  { label: 'Detector de Abandono Inteligente', icon: abandonmentIcon, pagina: 'abandono' as Pagina },
+  { label: 'Na Conversa', icon: conversationIcon, pagina: 'conversa' as Pagina },
 ];
 
 interface HomePageProps {
@@ -60,12 +60,18 @@ export function HomePage({ nomeUsuario, onNavegar, onMenuAbrir }: HomePageProps)
         <section className="home-page__services" aria-label="Principais recursos">
           <div className="home-page__service-grid">
             {HOME_FEATURES.map((feature) => (
-              <article key={feature.label} className="home-page__service-card">
+              <button
+                type="button"
+                key={feature.label}
+                className="home-page__service-card"
+                onClick={() => onNavegar(feature.pagina)}
+                aria-label={`Ir para ${feature.label}`}
+              >
                 <div className="home-page__service-icon">
                   <img src={feature.icon} alt="" aria-hidden="true" />
                 </div>
                 <p>{feature.label}</p>
-              </article>
+              </button>
             ))}
           </div>
         </section>

@@ -1,5 +1,7 @@
+export type FeatureIconName = 'alert' | 'refresh' | 'hide' | 'filter' | 'home' | 'wave' | 'percent' | 'thermometer' | 'dot';
+
 interface FeatureIconProps {
-  name: 'alert' | 'refresh' | 'hide' | 'filter' | 'home' | 'wave' | 'percent' | 'thermometer' | 'dot';
+  name: FeatureIconName;
 }
 
 export function FeatureIcon({ name }: FeatureIconProps) {

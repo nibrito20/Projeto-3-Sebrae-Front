@@ -754,6 +754,23 @@
   cursor: pointer;
   transition: background var(--transition-fast), color var(--transition-fast);
   border-left: 3px solid transparent;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.nav-drawer__item-icon {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  color: inherit;
+}
+
+.nav-drawer__item-icon img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
 }
 
 .nav-drawer__item:hover {
